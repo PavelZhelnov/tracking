@@ -1,0 +1,10 @@
+{
+  "com.tmw.tracking.build.timestamp": "${timestamp}",
+  "com.tmw.tracking.build.version": "${project.version}",
+  "com.tmw.tracking.build.ci.number": "${env.BUILD_NUMBER}",
+  "com.tmw.tracking.build.ci.id": "${env.BUILD_ID}",
+  "com.tmw.tracking.build.ci.url": "${env.BUILD_URL}",
+  "com.tmw.tracking.build.ci.tag": "${env.BUILD_TAG}",
+  "com.tmw.tracking.build.git.commit": "${env.GIT_COMMIT}",
+  "com.tmw.tracking.build.git.branch": "${env.GIT_BRANCH}"
+}
