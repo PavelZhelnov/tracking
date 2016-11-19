@@ -22,6 +22,7 @@ public class PermissionServiceImpl implements PermissionService, RolePermissionR
     static {
         rolePermMap.put(RoleType.SYSTEM_ADMIN, new HashSet<PermissionType>(Arrays.asList(
                 PermissionType.SHOW_SEARCH_ORDER,
+                PermissionType.SHOW_USERS,
                 PermissionType.ACCESS_ALL_STORES,
                 PermissionType.LOGIN_APP,
                 PermissionType.LOGIN_WEB,

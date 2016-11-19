@@ -21,12 +21,6 @@ This will create the deployable tracking.war file
 
 Either using the Tomcat Deployment Manager UI or copying the WAR into the Tomcat webapps directory should be sufficent to deploy onto Tomcat. If using Eclipse please refer to the instructions above about Building in Eclipse
 
-## NOTE for JDK 1.6: 
-For integration with POS we using JAX-WS version 2.x, it was compiled by jdk 1.7.
-If you use jdk 1.6, then you have one issue:
-we must start our web server with specified java.endorsed.dirs parameter. 
-It must contains path to the directory where webservices-api-2.x.jar exist. It replace javax.xml.ws.WebFault annotation.
-
 
 ## NOTE  DEV Enviroment args
 -XX:PermSize=256M -XX:MaxPermSize=256M -Xms2000m -Xmx2000m -Dtailoring.debug.mode=false

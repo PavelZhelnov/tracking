@@ -2,7 +2,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>tracking-rest</groupId>
-    <artifactId>tracking</artifactId>
+    <artifactId>tracking-rest-app</artifactId>
     <packaging>pom</packaging>
     <version>1.25-SNAPSHOT</version>
     <name>Tracking Jersey Webapp</name>
@@ -14,7 +14,7 @@
     </modules>
 
     <build>
-        <finalName>tracking</finalName>
+        <finalName>tracking-rest-app</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -159,29 +159,6 @@
             <version>5.2.0.Final</version>
         </dependency>
         <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>javax.el-api</artifactId>
-            <version>2.2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.glassfish.web</groupId>
-            <artifactId>javax.el</artifactId>
-            <version>2.2.4</version>
-        </dependency>
-
-        <!-- Redis client for logs -->
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.8.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.logstash.log4j</groupId>
-            <artifactId>jsonevent-layout</artifactId>
-            <version>1.7</version>
-        </dependency>
-
-        <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
@@ -205,11 +182,6 @@
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>2.2.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
-            <version>3.6.3</version>
         </dependency>
         <!-- ======================Test=============================== -->
         <dependency>
@@ -263,17 +235,6 @@
             <version>${easymock}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.jukito</groupId>
-            <artifactId>jukito</artifactId>
-            <version>1.4</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.tobedevoured.modelcitizen</groupId>
-            <artifactId>core</artifactId>
-            <version>0.8.1</version>
-        </dependency>
     </dependencies>
     <properties>
         <freemarker>2.3.19</freemarker>
@@ -281,7 +242,6 @@
         <hibernate>4.2.2.Final</hibernate>
         <easymock>3.1</easymock>
         <mockito.version>1.10.19</mockito.version>
-        <jukito.version>1.4.1</jukito.version>
         <jersey-version>1.17.1</jersey-version>
         <quartz>2.1.7</quartz>
         <slf4j>1.6.6</slf4j>

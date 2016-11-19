@@ -2,7 +2,6 @@ package com.tmw.tracking.web.service.mock;
 
 import com.google.inject.Singleton;
 import com.tmw.tracking.mail.MailSender;
-import com.tmw.tracking.service.impl.ReportServiceImpl;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,7 +17,7 @@ public class MailSenderMock extends MailSender {
     private final List<String> emailSubjects = new ArrayList<String>();
 
     public MailSenderMock() {
-        super(null, null, null, Executors.newFixedThreadPool(2), new ReportServiceImpl(), null, null);
+        super(null, null, null, Executors.newFixedThreadPool(2), null, null);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.tmw.tracking.filter;
 
+import com.tmw.tracking.entity.AuthenticatedUser;
 import com.tmw.tracking.entity.Role;
 import com.tmw.tracking.entity.User;
 import com.tmw.tracking.service.AuthenticationService;
@@ -49,8 +50,8 @@ public class TrackingSecurityRealm extends AuthorizingRealm {
                 final UsernamePasswordToken upToken = (UsernamePasswordToken) token;
                 final String username = upToken.getUsername() != null ? upToken.getUsername().toUpperCase() : "";
                 final String password = upToken.getPassword() != null ? String.valueOf(upToken.getPassword()) : null;
-                final User user = authenticationLogic.createOrUpdateUser(username, password);
-                return new TrackingAuthenticationInfo(user, HexGenerator.md5(password));
+                final AuthenticatedUser user = authenticationLogic.login(username, password);
+                return new TrackingAuthenticationInfo(user.getUser(), HexGenerator.md5(password));
             } else if(token instanceof TrackingAuthenticationToken){
                 return new TrackingAuthenticationInfo(authenticationLogic.validateUser((String)token.getCredentials()), token.getCredentials());
             }

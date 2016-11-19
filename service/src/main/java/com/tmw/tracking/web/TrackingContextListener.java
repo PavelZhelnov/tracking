@@ -1,8 +1,6 @@
 package com.tmw.tracking.web;
 
 import com.google.inject.Injector;
-import com.google.inject.Key;
-import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.tmw.tracking.utils.GuiceInstanceHolder;
 import com.tmw.tracking.utils.Utils;
@@ -21,7 +19,6 @@ public class TrackingContextListener extends GuiceServletContextListener {
     private final static Logger logger = LoggerFactory.getLogger(TrackingContextListener.class);
     private Scheduler scheduler;
     private ExecutorService executorServiceApp;
-    private ExecutorService executorServiceWebService;
     private ScheduledExecutorService scheduledExecutorService;
     /**
      * {@inheritDoc}
@@ -31,7 +28,6 @@ public class TrackingContextListener extends GuiceServletContextListener {
     protected Injector getInjector() {
         scheduler = GuiceInstanceHolder.getInjector().getInstance(Scheduler.class);
         executorServiceApp = GuiceInstanceHolder.getInjector().getInstance(ExecutorService.class);
-        executorServiceWebService = GuiceInstanceHolder.getInjector().getInstance(Key.get(ExecutorService.class, Names.named("POS")));
         scheduledExecutorService = GuiceInstanceHolder.getInjector().getInstance(ScheduledExecutorService.class);
         return GuiceInstanceHolder.getInjector();
     }
@@ -59,9 +55,6 @@ public class TrackingContextListener extends GuiceServletContextListener {
         }catch (SchedulerException e){logger.warn(Utils.errorToString(e));}
         try {
             executorServiceApp.shutdown();
-        }catch (Exception e){logger.warn(Utils.errorToString(e));}
-        try {
-            executorServiceWebService.shutdown();
         }catch (Exception e){logger.warn(Utils.errorToString(e));}
         try {
             scheduledExecutorService.shutdown();

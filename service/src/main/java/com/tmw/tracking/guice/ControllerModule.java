@@ -3,6 +3,8 @@ package com.tmw.tracking.guice;
 import com.google.inject.AbstractModule;
 import com.tmw.tracking.web.controller.MainController;
 import com.tmw.tracking.web.controller.MonitoringController;
+import com.tmw.tracking.web.controller.TrackingController;
+import com.tmw.tracking.web.controller.UserController;
 
 /**
  * Freemarker Controller Module
@@ -19,5 +21,7 @@ public class ControllerModule extends AbstractModule {
     protected void configure() {
         bind(MainController.class);
         bind(MonitoringController.class);
+        bind(UserController.class);
+        bind(TrackingController.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.tmw.tracking.service;
 
 import com.tmw.tracking.domain.LoginRequest;
+import com.tmw.tracking.entity.User;
 
 /**
  * Created by ankultepin on 6/3/2015.
@@ -16,6 +17,18 @@ public interface UserService {
      * @return instance of CredentialsStatus
      */
     CredentialsStatus validateUserCredentials(LoginRequest loginRequest);
+
+    User getUserByEmail(String email);
+
+    User getAnyUserByEmail(String email);
+
+    void update(User user);
+
+    User clearRoles(String email);
+
+    User create(User user);
+
+
 
     /**
      * Class contains info about credentials processing

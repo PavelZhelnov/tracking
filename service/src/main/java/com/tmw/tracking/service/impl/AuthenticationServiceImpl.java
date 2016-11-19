@@ -58,17 +58,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public AuthenticatedUser login(final String email, final String password) {
         User user;
         MDC.put(Utils.MDC_USER, email);
-        if (password == null) {
-            user = userDao.getAnyUserByEmail(email);
-            if (user == null) {
-                throw new ServiceException("User ["+email+"] not recognized. Please provide password.", false);
-            }
-            if(!user.isActive()){
-                throw new ServiceException("User ["+email+"] is not active, login denied", false);
-            }
-        } else {
-            user = createOrUpdateUser(email, password);
+        user = userDao.getAnyUserByEmail(email);
+        if (user == null) {
+            throw new ServiceException("User ["+email+"] not recognized. Please provide password.", false);
         }
+        if(!user.isActive()){
+            throw new ServiceException("User ["+email+"] is not active, login denied", false);
+        }
+        if (!user.getPassword().equals(Utils.encryptPassword(password))) {
+            throw new ServiceException("The credentials are incorrect!", false);
+        }
+//        } else {
+//            user = createOrUpdateUser(email, password);
+//        }
         return loginUser(user);
     }
 

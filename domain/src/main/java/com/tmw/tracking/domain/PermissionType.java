@@ -4,6 +4,7 @@ package com.tmw.tracking.domain;
  * User: enedzvetsky@provectus-it.com
  */
 public enum PermissionType {
+    SHOW_USERS,
     SHOW_SEARCH_ORDER,
     SHOW_STATUS,
     SHOW_LOGS,

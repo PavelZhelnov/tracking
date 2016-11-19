@@ -4,18 +4,9 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.sun.jersey.api.view.Viewable;
 import com.tmw.tracking.dao.JobStatusInfoDao;
-import com.tmw.tracking.entity.JobStatusInfo;
-import com.tmw.tracking.job.TrackingJob;
 import com.tmw.tracking.job.domain.JobInfo;
-import com.tmw.tracking.service.impl.AuthenticationServiceImpl;
-import com.tmw.tracking.utils.Utils;
-import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.web.filter.authc.FormAuthenticationFilter;
-import org.quartz.JobKey;
 import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.Trigger;
-import org.quartz.TriggerKey;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,14 +15,12 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author dmikhalishin@provectus-it.com
@@ -45,18 +34,15 @@ public class MainController extends BaseController {
 
     private final String serverVersion;
     private final JobStatusInfoDao jobStatusInfoDao;
-    private final Set<TrackingJob> trackingJobs;
     private final Scheduler scheduler;
 
     @Inject
     public MainController(@Named("server.version") final String serverVersion,
                           @Named("major.version") final String majorVersion,
                           final JobStatusInfoDao jobStatusInfoDao,
-                          final Set<TrackingJob> trackingJobs,
                           final Scheduler scheduler) {
         this.serverVersion = majorVersion+"_"+serverVersion;
         this.jobStatusInfoDao = jobStatusInfoDao;
-        this.trackingJobs = trackingJobs;
         this.scheduler = scheduler;
     }
 
@@ -78,6 +64,7 @@ public class MainController extends BaseController {
         vars.put("environment", environment);
         vars.put("error", req.getAttribute(FormAuthenticationFilter.DEFAULT_ERROR_KEY_ATTRIBUTE_NAME) != null);
         vars.put("username", req.getParameter("username"));
+        vars.put("password", req.getParameter("password"));
         return new Viewable("/login", vars);
     }
 
@@ -91,24 +78,14 @@ public class MainController extends BaseController {
         vars.put("version", serverVersion);
         vars.put("environment", environment);
         final List<JobInfo> jobInfo = new ArrayList<JobInfo>();
-        for (final TrackingJob job : trackingJobs) {
-            final JobInfo info = job.getInfo();
-            info.setStartDate(Utils.getDateInTimeZone(info.getStartDate(), TIME_ZONE_ID));
-            info.setEndDate(Utils.getDateInTimeZone(info.getEndDate(), TIME_ZONE_ID));
-            try {
-                final Trigger trigger = scheduler.getTrigger(new TriggerKey(info.getName()));
-                if (trigger != null)
-                    info.setNextFireTime(trigger.getNextFireTime());
-            } catch (SchedulerException e) {/*do nothing*/}
-            jobInfo.add(info);
-        }
+        //TODO
         vars.put("jobInfo", jobInfo);
         vars.put("angular", true);
         return new Viewable("/status", vars);
     }
 
 
-    @GET
+    /*@GET
     @Produces(MediaType.TEXT_HTML)
     @Path("/startJob")
     public String startJob(@QueryParam("key") final String jobName) {
@@ -126,9 +103,9 @@ public class MainController extends BaseController {
             }
         }
         return Boolean.FALSE.toString();
-    }
+    }*/
 
-    @GET
+    /*@GET
     @Produces(MediaType.TEXT_HTML)
     @Path("/enableJob")
     public String enableJob(@QueryParam("key") final String jobName, @QueryParam("enabled") final Boolean enabled) {
@@ -146,7 +123,7 @@ public class MainController extends BaseController {
             return Boolean.TRUE.toString();
         }
         return Boolean.FALSE.toString();
-    }
+    }*/
 
 
 }

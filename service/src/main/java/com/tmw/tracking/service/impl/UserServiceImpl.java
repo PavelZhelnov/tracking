@@ -52,4 +52,29 @@ public class UserServiceImpl implements UserService {
         }
         return new CredentialsStatus(true, "OK");
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userDao.getUserByEmail(email);
+    }
+
+    @Override
+    public User getAnyUserByEmail(String email) {
+        return userDao.getAnyUserByEmail(email);
+    }
+
+    @Override
+    public void update(User user) {
+        userDao.update(user);
+    }
+
+    @Override
+    public User clearRoles(String email) {
+        return userDao.clearRoles(email);
+    }
+
+    @Override
+    public User create(User user) {
+        return userDao.create(user);
+    }
 }

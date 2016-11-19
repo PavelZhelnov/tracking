@@ -5,6 +5,7 @@ import com.tmw.tracking.service.impl.AuthenticationServiceImpl;
 import com.tmw.tracking.utils.Utils;
 import com.tmw.tracking.web.controller.MainController;
 import com.tmw.tracking.web.controller.MonitoringController;
+import com.tmw.tracking.web.controller.UserController;
 import com.tmw.tracking.web.service.auth.AuthenticationResource;
 import com.tmw.tracking.web.service.exceptions.ServiceException;
 import org.aopalliance.intercept.MethodInterceptor;
@@ -70,6 +71,7 @@ public class ServiceMethodInterceptor implements MethodInterceptor {
         String declaringClassName = declaringClass.getName();
         if (!(declaringClassName.equals(AuthenticationResource.class.getName())
                 || declaringClassName.equals(MonitoringController.class.getName())
+                || declaringClassName.equals(UserController.class.getName())
                 || (declaringClassName.equals(MainController.class.getName())
                 && (methodName.equals("loginGet") || methodName.equals("loginPost"))))
                 && !SecurityUtils.getSubject().isAuthenticated())

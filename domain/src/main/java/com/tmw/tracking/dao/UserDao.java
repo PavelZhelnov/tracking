@@ -28,4 +28,5 @@ public interface UserDao {
     List<User> getAll();
 
     User clearRoles(String email);
+
 }

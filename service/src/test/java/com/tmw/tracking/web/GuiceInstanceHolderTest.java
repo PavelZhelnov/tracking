@@ -14,11 +14,11 @@ import com.tmw.tracking.guice.DaoModule;
 import com.tmw.tracking.guice.ServiceModule;
 import com.tmw.tracking.service.AuthenticationService;
 import com.tmw.tracking.service.PermissionService;
-import com.tmw.tracking.service.ReportService;
+import com.tmw.tracking.service.TrackingService;
 import com.tmw.tracking.service.UserService;
 import com.tmw.tracking.service.impl.AuthenticationServiceImpl;
 import com.tmw.tracking.service.impl.PermissionServiceImpl;
-import com.tmw.tracking.service.impl.ReportServiceImpl;
+import com.tmw.tracking.service.impl.TrackingServiceImpl;
 import com.tmw.tracking.service.impl.UserServiceImpl;
 import com.tmw.tracking.utils.DynamicConfig;
 import com.tmw.tracking.utils.GuiceInstanceHolder;
@@ -93,9 +93,8 @@ public class GuiceInstanceHolderTest {
 
                 bind(AuthenticationService.class).to(AuthenticationServiceImpl.class);
                 bind(PermissionService.class).to(PermissionServiceImpl.class);
-                bind(ReportService.class).to(ReportServiceImpl.class);
-                bind(ReportService.class).to(ReportServiceImpl.class);
                 bind(UserService.class).to(UserServiceImpl.class);
+                bind(TrackingService.class).to(TrackingServiceImpl.class);
 
                 final ServiceMethodInterceptor serviceMethodInterceptor = new ServiceMethodInterceptor();
                 bindInterceptor(Matchers.any(), Matchers.annotatedWith(GET.class), serviceMethodInterceptor);
@@ -108,13 +107,6 @@ public class GuiceInstanceHolderTest {
                 params.put("com.sun.jersey.spi.container.ContainerResponseFilters", "com.tmw.tracking.web.service.utils.response.ResponseFilter");
                 filter("/*").through(EntityManagerFlowFilter.class);
                 serve("/webresources/*").with(GuiceContainer.class, params);
-            }
-
-            @Singleton
-            @Provides
-            @Named("POS")
-            public ExecutorService getExecutorServiceForPOS() {
-                return Executors.newFixedThreadPool(N_THREADS);
             }
 
             @Singleton

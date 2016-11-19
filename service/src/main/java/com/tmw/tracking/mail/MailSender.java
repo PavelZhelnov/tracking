@@ -3,7 +3,6 @@ package com.tmw.tracking.mail;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.tmw.tracking.entity.User;
-import com.tmw.tracking.service.ReportService;
 import com.tmw.tracking.utils.DynamicConfig;
 import com.tmw.tracking.utils.Utils;
 import com.tmw.tracking.web.hibernate.EntityManagerProvider;
@@ -42,28 +41,22 @@ import java.util.concurrent.ExecutorService;
 public class MailSender {
 
     private final static Logger logger = LoggerFactory.getLogger(MailSender.class);
-    private final static String ORDER_COMPLETE = "mail/orderComplete.ftl";
-    private final static String ORDER_COMPLETE_REMINDER = "mail/orderCompleteReminder.ftl";
-    private final static String DAILY_SCHEDULE = "mail/scheduleInfoTablePDF.ftl";
-    public final static String MANIFEST = "print/manifest.ftl";
     private final static String FROM_LABEL = "Tracking System";
     private final String from;
     private final String user;
     private final String password;
     private final ExecutorService executorService;
-    private final ReportService reportManager;
     private EntityManagerProvider entityManagerProvider;
     private DynamicConfig dynamicConfig;
 
     @Inject
     public MailSender(@Named("mail.smtp.from") final String from, @Named("mail.user") final String user,
                       @Named("mail.password") final String password, @Named("default") final ExecutorService executorService,
-                      final ReportService reportManager, DynamicConfig dynamicConfig, final EntityManagerProvider entityManagerProvider) {
+                      DynamicConfig dynamicConfig, final EntityManagerProvider entityManagerProvider) {
         this.from = from;
         this.user = user;
         this.password = password;
         this.executorService = executorService;
-        this.reportManager = reportManager;
         this.dynamicConfig = dynamicConfig;
         this.entityManagerProvider = entityManagerProvider;
     }

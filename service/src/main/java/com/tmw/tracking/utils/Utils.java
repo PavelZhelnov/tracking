@@ -54,7 +54,6 @@ public class Utils extends DomainUtils {
     private static final Configuration configuration = new Configuration();
 
     public static final String PERSIST_MODULE_NAME = "tracking-rest";
-    public static final String POS_KEY = "POS";
     private static final String[] WORKING_DAY_DATE_FORMAT = new String[]{"yyyy-MM-dd'T'HH:mm:ss", "yyyy-MM-dd'T'HH:mm:ssZZ"};
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd-MM");
 
@@ -383,6 +382,9 @@ public class Utils extends DomainUtils {
     }
 
     public static String encryptPassword(String password) {
+        if (password == null) {
+            return null;
+        }
         String algorithm = "SHA";
 
         byte[] plainText = password.getBytes();

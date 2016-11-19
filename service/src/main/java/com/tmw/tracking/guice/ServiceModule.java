@@ -11,12 +11,14 @@ import com.sun.jersey.freemarker.FreemarkerViewProcessor;
 import com.sun.jersey.guice.JerseyServletModule;
 import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 import com.tmw.tracking.service.AuthenticationService;
+import com.tmw.tracking.service.MonitoringService;
 import com.tmw.tracking.service.PermissionService;
-import com.tmw.tracking.service.ReportService;
+import com.tmw.tracking.service.TrackingService;
 import com.tmw.tracking.service.UserService;
 import com.tmw.tracking.service.impl.AuthenticationServiceImpl;
+import com.tmw.tracking.service.impl.MonitoringServiceImpl;
 import com.tmw.tracking.service.impl.PermissionServiceImpl;
-import com.tmw.tracking.service.impl.ReportServiceImpl;
+import com.tmw.tracking.service.impl.TrackingServiceImpl;
 import com.tmw.tracking.service.impl.UserServiceImpl;
 import com.tmw.tracking.utils.DynamicConfig;
 import com.tmw.tracking.utils.Utils;
@@ -66,7 +68,6 @@ public class ServiceModule extends JerseyServletModule {
         // server will fail to start.
         bind(AuthenticationResource.class);
         bind(UserResource.class);
-        bind(ReportServiceImpl.class);
 
         // test mode
         final Object testMode = System.getProperty(TEST_MODE);
@@ -80,9 +81,9 @@ public class ServiceModule extends JerseyServletModule {
 
         bind(AuthenticationService.class).to(AuthenticationServiceImpl.class);
         bind(PermissionService.class).to(PermissionServiceImpl.class);
-        bind(ReportService.class).to(ReportServiceImpl.class);
-        bind(ReportService.class).to(ReportServiceImpl.class);
         bind(UserService.class).to(UserServiceImpl.class);
+        bind(MonitoringService.class).to(MonitoringServiceImpl.class);
+        bind(TrackingService.class).to(TrackingServiceImpl.class);
         /* use real services */
         //bind(ObjectMapper.class).toProvider(ObjectMapperProvider.class).in(Singleton.class);
         //bind(JacksonJsonProvider.class).toProvider(JacksonJsonProviderProvider.class).in(Singleton.class);
@@ -119,13 +120,6 @@ public class ServiceModule extends JerseyServletModule {
         final Map<String, String> pages = new HashMap<String, String>();
         pages.put(FreemarkerViewProcessor.FREEMARKER_TEMPLATES_BASE_PATH, "templates");
         serve("/tmw/*").with(TrackingGuiceContainer.class, pages);
-    }
-
-    @Singleton
-    @Provides
-    @Named("POS")
-    public ExecutorService getExecutorServiceForPOS() {
-        return Executors.newFixedThreadPool(N_THREADS);
     }
 
     @Singleton

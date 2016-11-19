@@ -63,63 +63,16 @@
                         <li <#if top_nav_selected == 'status'>class="active"</#if>><a href="${contextPath}/tmw/status">Status</a>
                         </li>
                     </#if>
-                    <#if shiro.isPermitted("SHOW_SEARCH_ORDER")>
-                        <li><a href="${contextPath}/tmw/storeInfo/orderSearch">Order</a></li>
-                    </#if>
-                    <#if shiro.isPermitted("SHOW_TAILOR_SCHEDULE")>
-                        <li><a href="${contextPath}/tmw/storeInfo/usersScheduleInfo">Tailor Schedule</a></li>
-                    </#if>
-                    <#if shiro.isPermitted("SHOW_REGIONAL_REPORT")|| shiro.isPermitted("SHOW_REGIONAL_REPORT") >
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">Reports<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <#if shiro.isPermitted("SHOW_REGIONAL_REPORT")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/regionalReport">Regional report</a></li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_NCA_BUSINESS_REPORT")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/ncaBusinessReport">NCA Business report</a></li>
-                                </#if>
-                            </ul>
-                        </li>
-                    </#if>
-                    <#if shiro.isPermitted("SHOW_DAILY_SCHEDULE")|| shiro.isPermitted("SHOW_ORDER_STATUS")|| shiro.isPermitted("SHOW_ORDER_INFO")||
+                    <li><a href="${contextPath}/tmw/tracking/trackContainer">Track Container</a></li>
+                    <#if shiro.isPermitted("SHOW_USERS")|| shiro.isPermitted("SHOW_ORDER_STATUS")|| shiro.isPermitted("SHOW_ORDER_INFO")||
                     shiro.isPermitted("SHOW_ALTERATION_PRICE")|| shiro.isPermitted("SHOW_ALTERED_GARMENT_INFO")||
                     shiro.isPermitted("SHOW_STORE_PRINTERS")||shiro.isPermitted("SHOW_USER_MANAGEMENT") ||shiro.isPermitted("SHOW_DEVICE_MANAGEMENT")
                     ||shiro.isPermitted("SHOW_STORE_INFO_MANAGEMENT") || shiro.isPermitted("SHOW_STORE_INFO_MANAGEMENT")>
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">System Tools<b class="caret"></b></a>
                             <ul class="dropdown-menu">
-                                <#if shiro.isPermitted("SHOW_DAILY_SCHEDULE")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/dailyScheduleInfo">Daily Schedule</a></li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_ORDER_STATUS")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/orderStatusReport">Order Status</a></li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_ORDER_INFO")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/orderInfo">Order Info</a></li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_ALTERATION_PRICE")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/alterationPriceInfo">Alteration Info</a>
-                                    </li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_ALTERED_GARMENT_INFO")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/alteredGarmentInfo">Altered garment
-                                        Info</a>
-                                    </li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_STORE_PRINTERS")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/storePrinters">Store printers</a></li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_USER_MANAGEMENT")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/userManagement">User management</a></li>
-                                    <li><a href="${contextPath}/tmw/storeInfo/jobCodeMapping">Job Mapping Management</a></li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_DEVICE_MANAGEMENT")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/deviceManagement">Device Management</a>
-                                    </li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_STORE_INFO_MANAGEMENT")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/storeInfoManagement">Store Info</a></li>
+                                <#if shiro.isPermitted("SHOW_USERS")>
+                                    <li><a href="${contextPath}/tmw/userstore/userManagement">User management</a></li>
                                 </#if>
                                 <#if shiro.isPermitted("SHOW_SYSTEM_CONFIG_MANAGEMENT")>
                                     <li><a href="${contextPath}/tmw/storeInfo/config">System Configuration</a></li>
@@ -127,7 +80,6 @@
                                 <#if shiro.isPermitted("SHOW_SYSTEM_MONITORING")>
                                     <li><a href="${contextPath}/tmw/monitoring/tests">System Monitoring</a></li>
                                 </#if>
-                                <li><a href="${contextPath}/tmw/storeInfo/setup">Store setup</a></li>
 
                             </ul>
                         </li>
@@ -135,8 +87,8 @@
                 </ul>
             </div>
             <#if shiro.principal??>
-                <div class="navbar-inverse brand" style="position: absolute; left: 750px;top:2px;">
-                ${shiro.principal.uniqueId}
+                <div class="navbar-inverse brand" style="position: absolute; left: 50px;top:35px;">
+                ${shiro.principal.email}
                     <#if shiro.principal.roles?? && shiro.principal.roles?size &gt; 0>
                         (${shiro.principal.roles[0].roleName})
                     <#else>
