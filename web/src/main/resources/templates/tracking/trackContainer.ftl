@@ -40,6 +40,7 @@
             }).error(function (data) {
                 $scope.errorMessage = "Request error";
                 $scope.message = null;
+                $scope.loading = false;
             });
         };
 

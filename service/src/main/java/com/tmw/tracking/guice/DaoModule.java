@@ -3,20 +3,22 @@ package com.tmw.tracking.guice;
 import com.google.inject.AbstractModule;
 import com.google.inject.matcher.Matchers;
 import com.tmw.tracking.Transaction;
+import com.tmw.tracking.dao.AuthenticatedUserDao;
+import com.tmw.tracking.dao.JobStatusInfoDao;
+import com.tmw.tracking.dao.RoleDao;
+import com.tmw.tracking.dao.TrackingSiteDao;
+import com.tmw.tracking.dao.UserDao;
+import com.tmw.tracking.dao.impl.AuthenticatedUserDaoImpl;
+import com.tmw.tracking.dao.impl.JobStatusInfoDaoImpl;
+import com.tmw.tracking.dao.impl.RoleDaoImpl;
+import com.tmw.tracking.dao.impl.TrackingSiteDaoImpl;
+import com.tmw.tracking.dao.impl.UserDaoImpl;
 import com.tmw.tracking.service.PermissionService;
 import com.tmw.tracking.service.impl.PermissionServiceImpl;
 import com.tmw.tracking.utils.Utils;
 import com.tmw.tracking.web.aop.TransactionalInterceptor;
 import com.tmw.tracking.web.hibernate.EntityManagerProvider;
 import com.tmw.tracking.web.hibernate.EntityManagerWrapper;
-import com.tmw.tracking.dao.AuthenticatedUserDao;
-import com.tmw.tracking.dao.JobStatusInfoDao;
-import com.tmw.tracking.dao.RoleDao;
-import com.tmw.tracking.dao.UserDao;
-import com.tmw.tracking.dao.impl.AuthenticatedUserDaoImpl;
-import com.tmw.tracking.dao.impl.JobStatusInfoDaoImpl;
-import com.tmw.tracking.dao.impl.RoleDaoImpl;
-import com.tmw.tracking.dao.impl.UserDaoImpl;
 
 import javax.persistence.EntityManager;
 
@@ -45,5 +47,6 @@ public class DaoModule extends AbstractModule {
         bind(UserDao.class).to(UserDaoImpl.class);
         bind(PermissionService.class).to(PermissionServiceImpl.class);
         bind(RoleDao.class).to(RoleDaoImpl.class);
+        bind(TrackingSiteDao.class).to(TrackingSiteDaoImpl.class);
     }
 }

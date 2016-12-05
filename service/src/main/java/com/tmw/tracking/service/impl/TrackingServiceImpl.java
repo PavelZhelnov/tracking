@@ -2,15 +2,20 @@ package com.tmw.tracking.service.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
+import com.tmw.tracking.dao.TrackingSiteDao;
+import com.tmw.tracking.entity.TrackingSite;
 import com.tmw.tracking.service.TrackingService;
 import com.tmw.tracking.service.UserService;
+import com.tmw.tracking.web.service.exceptions.ServiceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by pzhelnov on 11/18/2016.
@@ -19,92 +24,76 @@ import java.net.URL;
 public class TrackingServiceImpl implements TrackingService {
 
     private final UserService userService;
-    private final String USER_AGENT = "Mozilla/5.0";
+    private final TrackingSiteDao trackingSiteDao;
+    private final static Logger logger = LoggerFactory.getLogger(TrackingServiceImpl.class);
 
     @Inject
-    public TrackingServiceImpl(UserService userService) {
+    public TrackingServiceImpl(UserService userService, TrackingSiteDao trackingSiteDao) {
         this.userService = userService;
+        this.trackingSiteDao = trackingSiteDao;
     }
 
     @Override
     public String trackContainer(String containerNumber) {
-        return "Stub Message";
-    }
-
-
-
-
-    private void sendGet() throws Exception {
-
-        String url = "http://www.google.com/search?q=mkyong";
-
-        URL obj = new URL(url);
-        HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
-        // optional default is GET
-        con.setRequestMethod("GET");
-
-        //add request header
-        con.setRequestProperty("User-Agent", USER_AGENT);
-
-        int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'GET' request to URL : " + url);
-        System.out.println("Response Code : " + responseCode);
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+        try {
+            return sendGet(containerNumber);
         }
-        in.close();
-
-        //print result
-        System.out.println(response.toString());
-
-    }
-
-    // HTTP POST request
-    private void sendPost() throws Exception {
-
-        String url = "https://selfsolve.apple.com/wcResults.do";
-        URL obj = new URL(url);
-        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-
-        //add reuqest header
-        con.setRequestMethod("POST");
-        con.setRequestProperty("User-Agent", USER_AGENT);
-        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-
-        String urlParameters = "sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";
-
-        // Send post request
-        con.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-        wr.writeBytes(urlParameters);
-        wr.flush();
-        wr.close();
-
-        int responseCode = con.getResponseCode();
-        System.out.println("\nSending 'POST' request to URL : " + url);
-        System.out.println("Post parameters : " + urlParameters);
-        System.out.println("Response Code : " + responseCode);
-
-        BufferedReader in = new BufferedReader(
-                new InputStreamReader(con.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
-
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
+        catch (Exception e) {
+            throw new ServiceException(e.getMessage(), e);
         }
-        in.close();
-
-        //print result
-        System.out.println(response.toString());
 
     }
+
+
+    private String sendGet(String container) {
+        final ExecutorService executorService = Executors.newFixedThreadPool(10);
+
+        List<TrackingSite> trackingSiteList = trackingSiteDao.getTrackingSites();
+        List<Future<String>> futureList = new ArrayList<Future<String>>();
+        try {
+
+            for (TrackingSite trackingSite: trackingSiteList) {
+                if (trackingSite.getGetUrl() == null) {
+                    continue;
+                }
+                Future<String> future = executorService.submit(new TrackThread(trackingSite, container));
+                futureList.add(future);
+
+            }
+
+            for (Future<String> future: futureList) {
+                String result = future.get(1, TimeUnit.MINUTES);
+
+                if (result != null && !result.isEmpty()) {
+                    return result;
+                }
+            }
+        }
+        catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        finally {
+            executorService.shutdownNow();
+        }
+
+
+        return "Not successfull!";
+    }
+
+    /*private Map<String, String> firstStep(String url) {
+        try {
+            Connection.Response response = Jsoup.connect("http://"+url).
+                    userAgent("Mozilla/5.0").
+                    timeout(3000).
+                    method(Connection.Method.GET).execute();
+
+            return response.cookies();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new HashMap<String, String>();
+
+    }*/
 
 }
