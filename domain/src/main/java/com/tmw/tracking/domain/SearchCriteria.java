@@ -1,66 +1,16 @@
 package com.tmw.tracking.domain;
 
+import com.tmw.tracking.entity.Driver;
+
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.List;
 
 @XmlRootElement
 public class SearchCriteria {
 
-    private List<String> orderStatuses;
-    private String nameOrNumber;
-    private Boolean priority;
-    private Integer offset;
-    private Integer length;
-    private Long storeId;
+    private Driver driver;
+    private String terminal;
+    private String date;
     private SearchingSortCriteria sortCriteria;
-
-    public List<String> getOrderStatuses() {
-        return orderStatuses;
-    }
-
-    public void setOrderStatuses(List<String> status) {
-        this.orderStatuses = status;
-    }
-
-    public String getNameOrNumber() {
-        return nameOrNumber;
-    }
-
-    public void setNameOrNumber(String nameOrNumber) {
-        this.nameOrNumber = nameOrNumber;
-    }
-
-    public Boolean getOverdue() {
-        return priority;
-    }
-
-    public void setPriority(Boolean priority) {
-        this.priority = priority;
-    }
-
-    public Integer getOffset() {
-        return offset;
-    }
-
-    public void setOffset(Integer offset) {
-        this.offset = offset;
-    }
-
-    public Integer getLength() {
-        return length;
-    }
-
-    public void setLength(Integer length) {
-        this.length = length;
-    }
-
-    public Long getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(Long storeId) {
-        this.storeId = storeId;
-    }
 
     public SearchingSortCriteria getSortCriteria() {
         return sortCriteria;
@@ -70,4 +20,27 @@ public class SearchCriteria {
         this.sortCriteria = sortCriteria;
     }
 
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
+    }
+
+    public String getTerminal() {
+        return terminal;
+    }
+
+    public void setTerminal(String terminal) {
+        this.terminal = terminal;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }

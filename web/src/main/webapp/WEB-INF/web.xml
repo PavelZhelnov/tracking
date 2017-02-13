@@ -5,8 +5,8 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-    <description>tmw-tracking-${project.version}-${env.BUILD_NUMBER}-${env.GIT_BRANCH}</description>
-    <display-name>tmw-tracking-${project.version}-${env.BUILD_NUMBER}-${env.GIT_BRANCH}</display-name>
+    <description>Tracking for containers</description>
+    <display-name>Tracking for containers</display-name>
 
     <listener>
         <listener-class>

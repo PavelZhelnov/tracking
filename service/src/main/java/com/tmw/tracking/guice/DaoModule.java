@@ -9,9 +9,13 @@ import com.tmw.tracking.dao.RoleDao;
 import com.tmw.tracking.dao.TrackingSiteDao;
 import com.tmw.tracking.dao.UserDao;
 import com.tmw.tracking.dao.impl.AuthenticatedUserDaoImpl;
+import com.tmw.tracking.dao.impl.DriverDao;
+import com.tmw.tracking.dao.impl.DriverDaoImpl;
 import com.tmw.tracking.dao.impl.JobStatusInfoDaoImpl;
 import com.tmw.tracking.dao.impl.RoleDaoImpl;
 import com.tmw.tracking.dao.impl.TrackingSiteDaoImpl;
+import com.tmw.tracking.dao.impl.TransactionDao;
+import com.tmw.tracking.dao.impl.TransactionDaoImpl;
 import com.tmw.tracking.dao.impl.UserDaoImpl;
 import com.tmw.tracking.service.PermissionService;
 import com.tmw.tracking.service.impl.PermissionServiceImpl;
@@ -48,5 +52,8 @@ public class DaoModule extends AbstractModule {
         bind(PermissionService.class).to(PermissionServiceImpl.class);
         bind(RoleDao.class).to(RoleDaoImpl.class);
         bind(TrackingSiteDao.class).to(TrackingSiteDaoImpl.class);
+        bind(DriverDao.class).to(DriverDaoImpl.class);
+        bind(TransactionDao.class).to(TransactionDaoImpl.class);
+
     }
 }
