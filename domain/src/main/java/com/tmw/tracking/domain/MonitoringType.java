@@ -1,8 +1,5 @@
 package com.tmw.tracking.domain;
 
-/**
- * User: enedzvetsky@provectus-it.com
- */
 public enum MonitoringType {
     TRACKING_DATABASE("Database", false),
     LOGIN("Login", false),

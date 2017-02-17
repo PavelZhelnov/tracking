@@ -13,11 +13,6 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Custom {@link FreemarkerViewProcessor}
- * @author dmikhalishin@provectus-it.com
- * @see FreemarkerViewProcessor
- */
 public class CustomFreemarkerViewProcessor extends FreemarkerViewProcessor {
 
     private static final String CONTEXT_PATH = "contextPath";

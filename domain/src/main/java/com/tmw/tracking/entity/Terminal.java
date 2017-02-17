@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * Created by pzhelnov on 1/25/2017.
  */
 @Entity
-@Table(schema = "tracking", name="tracking")
+@Table(name="terminal")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Terminal {
     private static final long serialVersionUID = -6886848877574564547L;

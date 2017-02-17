@@ -11,9 +11,6 @@ import org.apache.shiro.authz.permission.WildcardPermission;
 
 import java.util.*;
 
-/**
- * User: enedzvetsky@provectus-it.com
- */
 @Singleton
 public class PermissionServiceImpl implements PermissionService, RolePermissionResolver {
     private static Map<RoleType, Set<PermissionType>> rolePermMap = new LinkedHashMap<RoleType, Set<PermissionType>>();

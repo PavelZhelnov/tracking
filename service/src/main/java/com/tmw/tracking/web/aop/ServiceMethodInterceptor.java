@@ -8,6 +8,7 @@ import com.tmw.tracking.web.controller.MonitoringController;
 import com.tmw.tracking.web.controller.UserController;
 import com.tmw.tracking.web.service.auth.AuthenticationResource;
 import com.tmw.tracking.web.service.exceptions.ServiceException;
+import com.tmw.tracking.web.service.util.error.ErrorCode;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.apache.commons.lang.StringUtils;
@@ -18,12 +19,6 @@ import org.apache.shiro.SecurityUtils;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
-/**
- * Service {@link MethodInterceptor method interceptor}
- *
- * @author dmikhalishin@provectus-it.com
- * @see MethodInterceptor
- */
 public class ServiceMethodInterceptor implements MethodInterceptor {
 
     private static final Logger logger = Logger.getLogger(ServiceMethodInterceptor.class);
@@ -56,7 +51,8 @@ public class ServiceMethodInterceptor implements MethodInterceptor {
         } catch (Exception e) {
             String reason = StringUtils.isNotBlank(e.getMessage()) ? e.getMessage() : e.getClass().getSimpleName();
             logger.error(reason,e);
-            throw new ServiceException(reason);
+            //TODO check what's the type of exception
+            throw new ServiceException(reason, ErrorCode.INTERNAL_SERVER_ERROR);
         } finally {
             MDC.put(Utils.MDC_DURATION, String.valueOf(System.currentTimeMillis() - start));
             logger.info("Processed api method: " + target);
@@ -75,7 +71,7 @@ public class ServiceMethodInterceptor implements MethodInterceptor {
                 || (declaringClassName.equals(MainController.class.getName())
                 && (methodName.equals("loginGet") || methodName.equals("loginPost"))))
                 && !SecurityUtils.getSubject().isAuthenticated())
-            throw new ServiceException("Token is invalid. User is not logged.");
+            throw new ServiceException("Token is invalid. User is not logged.", ErrorCode.AUTH_ERROR_TOKEN_IS_INVALID);
     }
 
 }

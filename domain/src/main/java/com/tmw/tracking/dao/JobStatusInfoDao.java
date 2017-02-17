@@ -5,10 +5,6 @@ import com.tmw.tracking.entity.JobStatusInfo;
 import java.util.Date;
 import java.util.List;
 
-/**
- * DAO for {@link JobStatusInfo}
- * @author dmikhalishin@provectus-it.com
- */
 public interface JobStatusInfoDao {
 
     JobStatusInfo getByName(String name);

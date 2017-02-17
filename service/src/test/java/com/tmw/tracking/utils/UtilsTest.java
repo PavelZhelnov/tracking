@@ -1,22 +1,15 @@
 package com.tmw.tracking.utils;
 
-import com.tmw.tracking.utils.Utils;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.sql.Connection;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created with IntelliJ IDEA.
- * User: vandreev
- * Date: 11.12.13
- * Time: 16:32
- * To change this template use File | Settings | File Templates.
- */
 public class UtilsTest extends TestCase {
 
     @Test
@@ -133,6 +126,15 @@ public class UtilsTest extends TestCase {
         String formatted = Utils.formatDate(date, "mm/dd/yyyy");
         System.out.println(formatted);
         assertNotNull(formatted);
+    }
+
+    @Test
+    public void testConnection() {
+        Connection conn =  new JavaMysqlConnection().getConnection();
+        if(conn == null)
+            System.out.println("Connection was not established");
+        else
+            System.out.println("Connection is successfully established");
     }
 
 }

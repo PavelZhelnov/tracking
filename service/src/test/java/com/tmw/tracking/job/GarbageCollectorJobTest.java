@@ -12,9 +12,6 @@ import org.junit.experimental.categories.Category;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Category(TrackingBaseUnitTest.class)
 public class GarbageCollectorJobTest extends TrackingBaseUnitTest {
 

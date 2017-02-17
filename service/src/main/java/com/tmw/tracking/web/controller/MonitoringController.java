@@ -20,9 +20,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Path("/monitoring")
 @Singleton
 public class MonitoringController extends BaseController {

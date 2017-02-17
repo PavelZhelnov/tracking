@@ -8,11 +8,8 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Entity
-@Table(schema = "tracking", name="tracking_role")
+@Table(name="tracking_role")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Role implements Serializable{
 

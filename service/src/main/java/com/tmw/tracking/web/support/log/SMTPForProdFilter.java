@@ -8,9 +8,6 @@ import org.apache.log4j.varia.StringMatchFilter;
 import com.google.inject.Singleton;
 import com.tmw.tracking.utils.Utils;
 
-/**
- * User: enedzvetsky@provectus-it.com
- */
 @Singleton
 public class SMTPForProdFilter extends StringMatchFilter {
 

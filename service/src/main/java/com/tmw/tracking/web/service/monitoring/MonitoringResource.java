@@ -13,9 +13,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-/**
- * User: enedzvetsky@provectus-it.com
- */
 @Path("/monitoring")
 @Singleton
 public class MonitoringResource {

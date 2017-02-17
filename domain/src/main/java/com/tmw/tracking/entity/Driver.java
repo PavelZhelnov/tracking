@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * Created by pzhelnov on 1/25/2017.
  */
 @Entity
-@Table(schema = "tracking", name="driver")
+@Table(name="driver")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Driver {
     private static final long serialVersionUID = -6886848877574564547L;

@@ -8,11 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Entity
-@Table(schema = "tracking", name = "authenticated_user")
+@Table(name = "authenticated_user")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AuthenticatedUser implements Serializable {
 

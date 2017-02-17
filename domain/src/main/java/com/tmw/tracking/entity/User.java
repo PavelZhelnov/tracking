@@ -13,13 +13,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
-/**
- * User entity
- *
- * @author dmikhalishin@provectus-it.com
- */
 @Entity
-@Table(schema = "tracking", name = "tracking_user")
+@Table(name = "tracking_user")
 @XmlRootElement
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
@@ -48,7 +43,7 @@ public class User implements Serializable {
     private Date lastUpdated;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "tracking_user_role", schema = "tracking",
+    @JoinTable(name = "tracking_user_role",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     @GeneratedValue(strategy = GenerationType.IDENTITY)

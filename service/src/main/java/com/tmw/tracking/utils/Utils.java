@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.tmw.tracking.DomainUtils;
 import com.tmw.tracking.mail.MailSender;
 import com.tmw.tracking.web.service.exceptions.ServiceException;
+import com.tmw.tracking.web.service.util.error.ErrorCode;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -44,9 +45,6 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.TimeZone;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 public class Utils extends DomainUtils {
 
     private final static Logger logger = LoggerFactory.getLogger(Utils.class);
@@ -371,7 +369,7 @@ public class Utils extends DomainUtils {
             String imgAsBase64 = imgDataAsBase64;
             return imgAsBase64;
         } catch (Exception e) {
-            throw new ServiceException(e.getMessage());
+            throw new ServiceException(e.getMessage(), ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -394,7 +392,7 @@ public class Utils extends DomainUtils {
         try {
             md = MessageDigest.getInstance(algorithm);
         } catch (Exception e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e.getMessage(), ErrorCode.INTERNAL_SERVER_ERROR);
         }
         md.reset();
         md.update(plainText);

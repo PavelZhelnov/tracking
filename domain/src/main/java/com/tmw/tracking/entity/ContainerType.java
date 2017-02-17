@@ -15,7 +15,7 @@ import java.io.Serializable;
  * Created by pzhelnov on 1/23/2017.
  */
 @Entity
-@Table(schema = "tracking", name="container_type")
+@Table(name="container_type")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ContainerType implements Serializable {
     private static final long serialVersionUID = -6886848877574564547L;

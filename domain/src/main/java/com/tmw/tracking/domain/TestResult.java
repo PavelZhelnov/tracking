@@ -1,8 +1,5 @@
 package com.tmw.tracking.domain;
 
-/**
- * User: enedzvetsky@provectus-it.com
- */
 public class TestResult {
     public static final String ALL_WORKING_NORMALLY="All working normally";
 

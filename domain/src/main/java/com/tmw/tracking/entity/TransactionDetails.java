@@ -1,5 +1,6 @@
 package com.tmw.tracking.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.Column;
@@ -17,7 +18,7 @@ import javax.validation.constraints.NotNull;
  * Created by pzhelnov on 1/25/2017.
  */
 @Entity
-@Table(schema = "tracking", name="transaction_details")
+@Table(name="transaction_details")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionDetails {
 
@@ -26,6 +27,7 @@ public class TransactionDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="tracking_transaction", nullable=false, updatable = true)
     private Transaction trackingTransaction;

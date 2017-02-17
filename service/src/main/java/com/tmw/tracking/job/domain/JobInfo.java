@@ -4,10 +4,6 @@ import com.tmw.tracking.entity.User;
 
 import java.util.Date;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
-
 public class JobInfo {
 
     private final String name;

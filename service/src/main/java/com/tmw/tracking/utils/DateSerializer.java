@@ -9,11 +9,6 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import java.io.IOException;
 import java.util.Date;
 
-/**
- * Date {@link JsonSerializer}
- * @author dmikhalishin@provectus-it.com
- * @see JsonSerializer
- */
 public class DateSerializer extends JsonSerializer<Date> {
     /**
      * {@inheritDoc}

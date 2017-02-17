@@ -9,10 +9,6 @@ import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertTrue;
 
-/**
- * @author dmikhalishin@provectus-it.com
- * @see TrackingBaseUnitTest
- */
 @Category(TrackingBaseUnitTest.class)
 public class UserServiceTest extends TrackingBaseUnitTest {
 

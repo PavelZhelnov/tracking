@@ -13,10 +13,6 @@ import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertNotNull;
 
-/**
- * @author dmikhalishin@provectus-it.com
- * @see TrackingBaseUnitTest
- */
 @Category(TrackingBaseUnitTest.class)
 public class AuthenticationLogicTest extends TrackingBaseUnitTest {
 

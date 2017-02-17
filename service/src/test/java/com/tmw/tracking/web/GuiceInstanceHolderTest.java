@@ -41,10 +41,6 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
-
 public class GuiceInstanceHolderTest {
 
     private final static Logger logger = LoggerFactory.getLogger(GuiceInstanceHolder.class);
@@ -104,7 +100,7 @@ public class GuiceInstanceHolderTest {
 
                 // Route all requests through GuiceContainer
                 final Map<String, String> params = new HashMap<String, String>();
-                params.put("com.sun.jersey.spi.container.ContainerResponseFilters", "com.tmw.tracking.web.service.utils.response.ResponseFilter");
+                params.put("com.sun.jersey.spi.container.ContainerResponseFilters", "com.tmw.tracking.web.service.util.response.ResponseFilter");
                 filter("/*").through(EntityManagerFlowFilter.class);
                 serve("/webresources/*").with(GuiceContainer.class, params);
             }

@@ -17,7 +17,6 @@ import java.util.List;
 
 /**
  * Guice Instance Holder
- * @author dmikhalishin@provectus-it.com
  */
 public class GuiceInstanceHolder {
 

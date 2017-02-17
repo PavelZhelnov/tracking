@@ -7,6 +7,8 @@ import com.tmw.tracking.entity.AuthenticatedUser;
 import com.tmw.tracking.service.AuthenticationService;
 import com.tmw.tracking.utils.DynamicConfig;
 import com.tmw.tracking.web.service.exceptions.ServiceException;
+import com.tmw.tracking.web.service.exceptions.ValidationException;
+import com.tmw.tracking.web.service.util.error.ErrorCode;
 import org.apache.commons.lang.StringUtils;
 
 import javax.inject.Inject;
@@ -19,11 +21,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-/**
- * Authentication service
- *
- * @author dmikhalishin@provectus-it.com
- */
 @Path("/auth")
 @Singleton
 public class AuthenticationResource {
@@ -55,7 +52,7 @@ public class AuthenticationResource {
     @Path("/logout")
     public Object logout(@QueryParam("token") final String token) {
         if (token == null)
-            throw new ServiceException("Token cannot be null.");
+            throw new ServiceException("Token cannot be null.", ErrorCode.AUTH_ERROR_TOKEN_IS_INVALID);
         authenticationLogic.logout(token);
         return null/* return nothing */;
     }
@@ -70,10 +67,10 @@ public class AuthenticationResource {
      */
     private void validateLoginRequest(final LoginRequest loginRequest) {
         if (loginRequest == null) {
-            throw new ServiceException("Login request cannot be null.");
+            throw new ValidationException("Login request cannot be null.");
         }
         if (StringUtils.isBlank(loginRequest.getUserId())) {
-            throw new ServiceException("User ID must be specified.");
+            throw new ValidationException("User ID must be specified.");
         }
     }
 }

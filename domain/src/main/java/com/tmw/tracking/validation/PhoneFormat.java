@@ -2,16 +2,13 @@ package com.tmw.tracking.validation;
 
 import com.tmw.tracking.validation.validator.PhoneFormatValidator;
 
-import static java.lang.annotation.ElementType.*;
-import static java.lang.annotation.RetentionPolicy.*;
-
 import javax.validation.Constraint;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.RetentionPolicy.RUNTIME;
+
 @Target( { FIELD })
 @Retention(RUNTIME)
 @Constraint(validatedBy = PhoneFormatValidator.class)

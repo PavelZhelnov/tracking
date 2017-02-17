@@ -6,11 +6,6 @@ import com.tmw.tracking.web.controller.MonitoringController;
 import com.tmw.tracking.web.controller.TrackingController;
 import com.tmw.tracking.web.controller.UserController;
 
-/**
- * Freemarker Controller Module
- * @author dmikhalishin@provectus-it.com
- * @see AbstractModule
- */
 public class ControllerModule extends AbstractModule {
 
     /**

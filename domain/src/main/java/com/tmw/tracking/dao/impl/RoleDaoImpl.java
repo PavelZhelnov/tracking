@@ -15,12 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * {@link RoleDao} implementation
- *
- * @author dmikhalishin@provectus-it.com
- * @see RoleDao
- */
 @Singleton
 public class RoleDaoImpl implements RoleDao {
 

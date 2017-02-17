@@ -17,9 +17,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 public class DomainUtils {
 
     public static final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";

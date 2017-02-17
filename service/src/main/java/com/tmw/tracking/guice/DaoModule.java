@@ -26,11 +26,6 @@ import com.tmw.tracking.web.hibernate.EntityManagerWrapper;
 
 import javax.persistence.EntityManager;
 
-/**
- * Guice DAO module
- * @author dmikhalishin@provectus-it.com
- * @see AbstractModule
- */
 public class DaoModule extends AbstractModule {
 
     /**

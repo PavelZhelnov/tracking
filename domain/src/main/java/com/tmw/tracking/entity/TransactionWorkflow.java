@@ -19,7 +19,7 @@ import javax.validation.constraints.NotNull;
  * Created by pzhelnov on 1/25/2017.
  */
 @Entity
-@Table(schema = "tracking", name="transaction_workflow")
+@Table(name="transaction_workflow")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TransactionWorkflow {
 

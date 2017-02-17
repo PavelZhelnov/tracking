@@ -8,9 +8,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.TimeZone;
 
-/**
- * User: enedzvetsky@provectus-it.com
- */
 public class TimeZoneUtils {
     private final static Logger logger = LoggerFactory.getLogger(TimeZoneUtils.class);
     private final static Set<String> availableTimeZoneCodes = new HashSet<String>();

@@ -17,11 +17,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * {@link EntityManager} wrapper
- * @author dmikhalishin@provectus-it.com
- * @see EntityManager
- */
 @Singleton
 public class EntityManagerWrapper implements EntityManager {
 

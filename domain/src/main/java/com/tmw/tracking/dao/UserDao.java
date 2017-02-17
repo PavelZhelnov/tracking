@@ -5,10 +5,6 @@ import com.tmw.tracking.entity.enums.RoleType;
 
 import java.util.List;
 
-/**
- * {@link User} DAO
- * @author dmikhalishin@provectus-it.com
- */
 public interface UserDao {
 
     User getById(Long id);

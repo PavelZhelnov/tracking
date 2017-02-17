@@ -6,11 +6,6 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.regex.Pattern;
 
-/**
- * Phone format validator
- * @author dmikhalishin@provectus-it.com
- * @see ConstraintValidator
- */
 public class PhoneFormatValidator implements ConstraintValidator<PhoneFormat, String> {
 
     public static final Pattern regex = Pattern.compile("^\\(?([0-9]{3})\\)?[-. ]([0-9]{3})[-. ]([0-9]{4})$");

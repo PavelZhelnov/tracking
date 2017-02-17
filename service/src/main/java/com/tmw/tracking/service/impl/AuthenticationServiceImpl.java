@@ -10,7 +10,9 @@ import com.tmw.tracking.entity.User;
 import com.tmw.tracking.service.AuthenticationService;
 import com.tmw.tracking.utils.DynamicConfig;
 import com.tmw.tracking.utils.Utils;
+import com.tmw.tracking.web.service.exceptions.NotFoundException;
 import com.tmw.tracking.web.service.exceptions.ServiceException;
+import com.tmw.tracking.web.service.util.error.ErrorCode;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.MDC;
@@ -24,11 +26,6 @@ import javax.inject.Named;
 import java.util.Date;
 import java.util.UUID;
 
-/**
- * Authentication logic
- *
- * @author dmikhalishin@provectus-it.com
- */
 @Singleton
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -60,17 +57,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         MDC.put(Utils.MDC_USER, email);
         user = userDao.getAnyUserByEmail(email);
         if (user == null) {
-            throw new ServiceException("User ["+email+"] not recognized. Please provide password.", false);
+            throw new NotFoundException("User ["+email+"] not recognized. Please provide password.");
         }
         if(!user.isActive()){
-            throw new ServiceException("User ["+email+"] is not active, login denied", false);
+            throw new ServiceException("User ["+email+"] is not active, login denied", ErrorCode.AUTH_ERROR_ACCOUNT_DISABLED);
         }
         if (!user.getPassword().equals(Utils.encryptPassword(password))) {
-            throw new ServiceException("The credentials are incorrect!", false);
+            throw new ServiceException("The credentials are incorrect!", ErrorCode.AUTH_ERROR_USER_OR_PASSWORD_IS_INVALID);
         }
-//        } else {
-//            user = createOrUpdateUser(email, password);
-//        }
         return loginUser(user);
     }
 
@@ -107,14 +101,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public User validateUser(final String token) {
         if (StringUtils.isBlank(token)) {
-            throw new ServiceException("Token cannot be blank");
+            throw new ServiceException("Token cannot be blank", ErrorCode.AUTH_ERROR_TOKEN_IS_INVALID);
         }
         final AuthenticatedUser authenticatedUser = authenticatedUserDao.getAuthenticatedUserByToken(token);
         if (authenticatedUser == null) {
-            throw new ServiceException("Token is invalid. User is not logged.");
+            throw new ServiceException("Token is invalid. User is not logged.", ErrorCode.AUTH_ERROR_TOKEN_IS_INVALID);
         }
         if (authenticatedUser.getExpired().before(new Date())) {
-            throw new ServiceException("Token is expired.");
+            throw new ServiceException("Token is expired.", ErrorCode.AUTH_ERROR_TOKEN_IS_EXPIRED);
         }
         return authenticatedUser.getUser();
     }
@@ -128,7 +122,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Transaction
     public void logout(final String token) {
         if (StringUtils.isBlank(token)) {
-            throw new ServiceException("Token cannot be blank");
+            throw new ServiceException("Token cannot be blank", ErrorCode.AUTH_ERROR_TOKEN_IS_INVALID);
         }
 
         final AuthenticatedUser authenticatedUser = authenticatedUserDao.getAuthenticatedUserByToken(token);
@@ -197,7 +191,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         if (currentUser != null) {
             return currentUser;
         }
-        throw new ServiceException("Token is invalid. User is not logged.");
+        throw new ServiceException("Token is invalid. User is not logged.", ErrorCode.AUTH_ERROR_TOKEN_IS_INVALID);
     }
 
     public static User getCurrentUser() {

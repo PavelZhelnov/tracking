@@ -5,9 +5,6 @@ import org.apache.log4j.spi.Filter;
 import org.apache.log4j.spi.LoggingEvent;
 import org.apache.log4j.spi.ThrowableInformation;
 
-/**
- * User: enedzvetsky@provectus-it.com
- */
 public class ServiceExcLogFilter extends Filter {
 
     @Override

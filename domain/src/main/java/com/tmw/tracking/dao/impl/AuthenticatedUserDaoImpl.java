@@ -12,11 +12,6 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.Date;
 
-/**
- * {@link AuthenticatedUserDao} implementation
- * @author dmikhalishin@provectus-it.com
- * @see AuthenticatedUserDao
- */
 @Singleton
 public class AuthenticatedUserDaoImpl implements AuthenticatedUserDao{
     private EntityManager entityManager;

@@ -6,10 +6,6 @@ import com.tmw.tracking.entity.enums.RoleType;
 import java.util.List;
 import java.util.Map;
 
-/**
- * {@link Role} DAO
- * @author dmikhalishin@provectus-it.com
- */
 public interface RoleDao {
 
     /**

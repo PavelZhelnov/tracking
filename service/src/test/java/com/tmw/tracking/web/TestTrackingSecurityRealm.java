@@ -4,10 +4,6 @@ import com.tmw.tracking.service.impl.AuthenticationServiceImpl;
 import com.tmw.tracking.web.hibernate.EntityManagerProvider;
 import com.tmw.tracking.filter.TrackingSecurityRealm;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
-
 public class TestTrackingSecurityRealm extends TrackingSecurityRealm {
 
     @Override

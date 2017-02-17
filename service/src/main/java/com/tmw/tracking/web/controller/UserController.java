@@ -27,9 +27,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Path("/userstore")
 @Singleton
 public class UserController extends BaseController {

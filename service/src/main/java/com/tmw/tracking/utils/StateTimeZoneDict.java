@@ -4,9 +4,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TimeZone;
 
-/**
- * User: enedzvetsky@provectus-it.com
- */
 public class StateTimeZoneDict {
     public static final Map<String,TimeZone> TIME_ZONE_MAP = new LinkedHashMap<String, TimeZone>();
     static{

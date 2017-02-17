@@ -6,7 +6,8 @@ import com.tmw.tracking.dao.UserDao;
 import com.tmw.tracking.domain.LoginRequest;
 import com.tmw.tracking.entity.User;
 import com.tmw.tracking.service.UserService;
-import com.tmw.tracking.web.service.exceptions.ServiceException;
+import com.tmw.tracking.web.service.exceptions.NotFoundException;
+import com.tmw.tracking.web.service.exceptions.ValidationException;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -17,11 +18,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-/**
- * Service for {@link User}
- *
- * @author dmikhalishin@provectus-it.com
- */
 @Path("/user")
 @Singleton
 public class UserResource {
@@ -49,10 +45,10 @@ public class UserResource {
     @Path("/get")
     public User getUser(@QueryParam("id") final Long id) {
         if (id == null)
-            throw new ServiceException("ID cannot be null.");
+            throw new ValidationException("ID cannot be null.");
         final User user = userDao.getById(id);
         if (user == null)
-            throw new ServiceException("User was not found.");
+            throw new NotFoundException("User was not found.");
         return user;
     }
 

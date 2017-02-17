@@ -6,7 +6,8 @@ import com.tmw.tracking.domain.LoginRequest;
 import com.tmw.tracking.entity.User;
 import com.tmw.tracking.service.UserService;
 import com.tmw.tracking.utils.DynamicConfig;
-import com.tmw.tracking.web.service.exceptions.ServiceException;
+import com.tmw.tracking.web.service.exceptions.NotFoundException;
+import com.tmw.tracking.web.service.exceptions.ValidationException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,13 +35,13 @@ public class UserServiceImpl implements UserService {
     public CredentialsStatus validateUserCredentials(LoginRequest loginRequest) {
 
         if (loginRequest == null) {
-            throw new ServiceException("Login request cannot be null.");
+            throw new ValidationException("Login request cannot be null.");
         }
         if (loginRequest.getUserId() == null || StringUtils.isBlank(loginRequest.getUserId())) {
-            throw new ServiceException("User ID must be specified.");
+            throw new ValidationException("User ID must be specified.");
         }
         if (loginRequest.getPassword() == null || StringUtils.isBlank(loginRequest.getPassword())) {
-            throw new ServiceException("Password must be specified.");
+            throw new ValidationException("Password must be specified.");
         }
         String userId = loginRequest.getUserId();
         String password = loginRequest.getPassword();
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userDao.getUserByEmail(userId.toUpperCase());
         if (user == null) {
-            throw new ServiceException(USER_NOT_FOUND_MESSAGE);
+            throw new NotFoundException(USER_NOT_FOUND_MESSAGE);
         }
         return new CredentialsStatus(true, "OK");
     }

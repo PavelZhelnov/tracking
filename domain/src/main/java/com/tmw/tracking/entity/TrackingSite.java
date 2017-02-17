@@ -9,7 +9,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(schema = "tracking", name="tracking_site")
+@Table(name="tracking_site")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TrackingSite implements Serializable{
 

@@ -7,6 +7,8 @@ import com.tmw.tracking.utils.DynamicConfig;
 import com.tmw.tracking.utils.Utils;
 import com.tmw.tracking.web.hibernate.EntityManagerProvider;
 import com.tmw.tracking.web.service.exceptions.ServiceException;
+import com.tmw.tracking.web.service.exceptions.ValidationException;
+import com.tmw.tracking.web.service.util.error.ErrorCode;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,11 +34,6 @@ import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 
-/**
- * Mail sender
- *
- * @author dmikhalishin@provectus-it.com
- */
 @Singleton
 public class MailSender {
 
@@ -63,7 +60,7 @@ public class MailSender {
 
     public void sendEmailMessageForUsers(final List<User> users, final String subject, final String message) {
         if (users == null || users.size() == 0)
-            throw new ServiceException("Email cannot be sent. No recipients.");
+            throw new ValidationException("Email cannot be sent. No recipients.");
         // send email in separate thread
         final List<String> emails = new ArrayList<String>();
         for (final User user : users)
@@ -142,7 +139,7 @@ public class MailSender {
             }
 
             if (internetAddresses.length == 0) {
-                throw new ServiceException("[" + id + "] Email cannot be sent. for empty recipients");
+                throw new ValidationException("[" + id + "] Email cannot be sent. for empty recipients");
             }
 
             MimeBodyPart messageBodyPart = new MimeBodyPart();
@@ -179,7 +176,7 @@ public class MailSender {
             logger.info("[" + id + "] Sent message successfully....");
         } catch (Exception e) {
             logger.error("[" + id + "] Cannot send email [" + subject + "] to: " + to + ". " + Utils.errorToString(e));
-            throw new ServiceException("[" + id + "] Email cannot be sent.");
+            throw new ServiceException("[" + id + "] Email cannot be sent.", ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
 

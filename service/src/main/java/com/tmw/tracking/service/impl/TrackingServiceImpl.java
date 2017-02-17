@@ -7,6 +7,7 @@ import com.tmw.tracking.entity.TrackingSite;
 import com.tmw.tracking.service.TrackingService;
 import com.tmw.tracking.service.UserService;
 import com.tmw.tracking.web.service.exceptions.ServiceException;
+import com.tmw.tracking.web.service.util.error.ErrorCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +40,7 @@ public class TrackingServiceImpl implements TrackingService {
             return sendGet(containerNumber);
         }
         catch (Exception e) {
-            throw new ServiceException(e.getMessage(), e);
+            throw new ServiceException(e.getMessage(), ErrorCode.INTERNAL_SERVER_ERROR);
         }
 
     }

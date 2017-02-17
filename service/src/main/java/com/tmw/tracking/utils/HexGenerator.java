@@ -5,10 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.security.MessageDigest;
 
-/**
- * Hex generator
- * @author dmikhalishin@provectus-it.com
- */
 public class HexGenerator {
 
     private final static Logger logger = LoggerFactory.getLogger(HexGenerator.class);

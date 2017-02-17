@@ -2,11 +2,6 @@ package com.tmw.tracking.guice;
 
 import org.nnsoft.guice.guartz.QuartzModule;
 
-/**
- * Schedule Job Module
- * @author dmikhalishin@provectus-it.com
- * @see QuartzModule
- */
 public class ScheduleJobModule extends QuartzModule {
 
     private static final String DEFAULT_SCHEDULE = "0 0 0 1 1 ?";

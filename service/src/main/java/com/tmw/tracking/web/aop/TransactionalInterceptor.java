@@ -9,11 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.persistence.EntityManager;
 
-/**
- * Transactional Interceptor
- * @author dmikhalishin@provectus-it.com
- * @see MethodInterceptor
- */
 public class TransactionalInterceptor implements MethodInterceptor {
 
     public static final int TIMEOUT = Integer.valueOf(System.getProperty("tracking.transaction.timeout", "-1"));  //seconds

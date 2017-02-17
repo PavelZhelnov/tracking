@@ -6,14 +6,21 @@
         <non-jta-data-source>java:comp/env/jdbc/tracking</non-jta-data-source>
 
         <class>com.tmw.tracking.entity.AuthenticatedUser</class>
+        <class>com.tmw.tracking.entity.ContainerType</class>
+        <class>com.tmw.tracking.entity.Driver</class>
         <class>com.tmw.tracking.entity.JobStatusInfo</class>
         <class>com.tmw.tracking.entity.Role</class>
-        <class>com.tmw.tracking.entity.User</class>
+        <class>com.tmw.tracking.entity.Terminal</class>
+        <class>com.tmw.tracking.entity.Transaction</class>
+        <class>com.tmw.tracking.entity.TransactionDetails</class>
         <class>com.tmw.tracking.entity.TrackingSite</class>
+        <class>com.tmw.tracking.entity.TransactionWorkflow</class>
+        <class>com.tmw.tracking.entity.User</class>
+
 
         <properties>
             <property name="hibernate.archive.autodetection" value="class, hbm" />
-            <property name="hibernate.show_sql" value="false" />
+            <property name="hibernate.show_sql" value="true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
             <property name="hibernate.hbm2ddl.auto" value="update" />
 <!--

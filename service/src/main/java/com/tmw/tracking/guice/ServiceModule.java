@@ -43,12 +43,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-/**
- * Service module
- *
- * @author dmikhalishin@provectus-it.com
- * @see JerseyServletModule
- */
 public class ServiceModule extends JerseyServletModule {
 
     public static final String THREAD_SIZE_KEY = "thread.size";
@@ -108,9 +102,9 @@ public class ServiceModule extends JerseyServletModule {
         final Map<String, String> params = new HashMap<String, String>();
         if (debugeMode != null && Boolean.valueOf(debugeMode.toString())) {
             params.put(ResourceConfig.PROPERTY_CONTAINER_REQUEST_FILTERS, "com.sun.jersey.api.container.filter.LoggingFilter");
-            params.put(ResourceConfig.PROPERTY_CONTAINER_RESPONSE_FILTERS, "com.tmw.tracking.web.service.utils.response.ResponseFilter,com.sun.jersey.api.container.filter.LoggingFilter");
+            params.put(ResourceConfig.PROPERTY_CONTAINER_RESPONSE_FILTERS, "com.tmw.tracking.web.service.util.response.ResponseFilter,com.sun.jersey.api.container.filter.LoggingFilter");
         } else {
-            params.put(ResourceConfig.PROPERTY_CONTAINER_RESPONSE_FILTERS, "com.tmw.tracking.web.service.utils.response.ResponseFilter");
+            params.put(ResourceConfig.PROPERTY_CONTAINER_RESPONSE_FILTERS, "com.tmw.tracking.web.service.util.response.ResponseFilter");
         }
 //        params.put("com.sun.jersey.config.feature.Trace", "true");               // uncomment if need trace rest calls
         params.put(LoggingFilter.FEATURE_LOGGING_DISABLE_ENTITY, "false"); //no, uncomment this, as we need rest calls only, without any other garbage

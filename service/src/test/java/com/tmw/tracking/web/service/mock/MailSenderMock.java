@@ -8,9 +8,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Singleton
 public class MailSenderMock extends MailSender {
 

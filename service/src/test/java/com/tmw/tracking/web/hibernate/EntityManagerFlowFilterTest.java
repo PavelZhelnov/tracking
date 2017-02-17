@@ -1,7 +1,5 @@
 package com.tmw.tracking.web.hibernate;
 
-import com.tmw.tracking.web.hibernate.EntityManagerFlowFilter;
-import com.tmw.tracking.web.hibernate.EntityManagerProvider;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,10 +8,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
 import static org.easymock.EasyMock.*;
-
-/**
- * @author dmikhalishin@provectus-it.com
- */
 
 public class EntityManagerFlowFilterTest {
 

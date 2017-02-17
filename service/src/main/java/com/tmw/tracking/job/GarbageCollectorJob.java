@@ -5,12 +5,6 @@ import com.google.inject.Singleton;
 import com.tmw.tracking.dao.JobStatusInfoDao;
 import com.tmw.tracking.web.hibernate.EntityManagerProvider;
 
-/**
- * Remove orders that were not scheduled more than one week
- * Remove signatures older then 6 month
- * @author dmikhalishin@provectus-it.com
- * @see TrackingJob
- */
 @Singleton
 public class GarbageCollectorJob extends TrackingJob {
 

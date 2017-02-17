@@ -15,9 +15,6 @@ import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertFalse;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Category(TrackingBaseUnitTest.class)
 public class UserDaoTest extends TrackingBaseUnitTest {
 

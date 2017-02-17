@@ -3,9 +3,6 @@ package com.tmw.tracking.domain;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Date;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @XmlRootElement
 public class LoginResponse {
     private String token;

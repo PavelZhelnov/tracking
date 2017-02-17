@@ -1,6 +1,9 @@
 package com.tmw.tracking.web.hibernate;
 
-import java.io.IOException;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import javax.servlet.Filter;
@@ -11,15 +14,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
 
-/**
- * {@link javax.persistence.EntityManager} Flow Filter
- * @author dmikhalishin@provectus-it.com
- * @see Filter
- */
 @Singleton
 public class EntityManagerFlowFilter implements Filter {
 

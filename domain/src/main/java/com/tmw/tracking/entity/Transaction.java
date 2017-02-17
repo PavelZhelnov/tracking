@@ -22,7 +22,7 @@ import java.util.List;
  * Created by pzhelnov on 1/25/2017.
  */
 @Entity
-@Table(schema = "tracking", name="tracking_transaction")
+@Table(name="tracking_transaction")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Transaction {
 
@@ -42,7 +42,7 @@ public class Transaction {
     @Column(nullable = true, name = "transaction_1c")
     private String transaction1c;
 
-    @OneToMany(mappedBy = "transaction", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "trackingTransaction", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private List<TransactionDetails> transactionDetails;
 

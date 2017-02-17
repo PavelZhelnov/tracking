@@ -14,9 +14,6 @@ import org.junit.experimental.categories.Category;
 import javax.persistence.EntityManager;
 import java.util.Date;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Category(TrackingBaseUnitTest.class)
 public class AuthenticatedUserDaoTest extends TrackingBaseUnitTest {
 

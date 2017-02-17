@@ -6,9 +6,6 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Category(TrackingBaseUnitTest.class)
 public class PhoneFormatValidatorTest {
 

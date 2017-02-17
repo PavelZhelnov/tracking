@@ -22,9 +22,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Path("/")
 @Singleton
 public class MainController extends BaseController {

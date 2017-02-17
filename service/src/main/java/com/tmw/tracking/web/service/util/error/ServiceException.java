@@ -1,14 +1,9 @@
-package com.tmw.tracking.web.service.exceptions;
-
-import com.tmw.tracking.web.service.util.error.ErrorCode;
+package com.tmw.tracking.web.service.util.error;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-/**
- * Created by pzhelnov on 11/11/2016.
- */
 public class ServiceException extends WebApplicationException {
     private final String code;
     private boolean important;

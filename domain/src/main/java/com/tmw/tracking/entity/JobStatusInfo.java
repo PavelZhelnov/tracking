@@ -8,11 +8,8 @@ import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @Entity
-@Table(schema = "tracking", name="job_status_info")
+@Table(name="job_status_info")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class JobStatusInfo implements Serializable {
     private static final long serialVersionUID = -6886848877574564547L;

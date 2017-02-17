@@ -2,9 +2,6 @@ package com.tmw.tracking.domain;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-/**
- * @author dmikhalishin@provectus-it.com
- */
 @XmlRootElement
 public class LoginRequest {
 

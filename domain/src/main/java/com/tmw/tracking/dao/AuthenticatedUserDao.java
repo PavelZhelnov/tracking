@@ -3,10 +3,6 @@ package com.tmw.tracking.dao;
 import com.tmw.tracking.entity.AuthenticatedUser;
 import com.tmw.tracking.entity.User;
 
-/**
- * {@link AuthenticatedUser} DAO
- * @author dmikhalishin@provectus-it.com
- */
 public interface AuthenticatedUserDao {
     /**
      * Retrieves the {@link AuthenticatedUser} by {@link User}

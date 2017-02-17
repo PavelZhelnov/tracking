@@ -13,11 +13,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Implementation {@link JobStatusInfoDao}
- * @author dmikhalishin@provectus-it.com
- * @see JobStatusInfoDao
- */
 @Singleton
 public class JobStatusInfoDaoImpl implements JobStatusInfoDao {
 

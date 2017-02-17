@@ -27,9 +27,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * User: enedzvetsky@provectus-it.com
- */
 public class MonitoringServiceImpl implements MonitoringService {
     private final static Logger logger = LoggerFactory.getLogger(MonitoringServiceImpl.class);
     private final EntityManager entityManager;
@@ -70,8 +67,8 @@ public class MonitoringServiceImpl implements MonitoringService {
     public TestResult startTest(MonitoringType test) {
         TestResult tr;
         switch (test) {
-            case SEND_EMAIL: tr = testSendEmail(); break;
-            case LOGIN: tr = testLogin(); break;
+            //case SEND_EMAIL: tr = testSendEmail(); break;
+            //case LOGIN: tr = testLogin(); break;
             default:
                 tr = new TestResult(test);
                 tr.setTestResult("Test wasn't implemented: " + test.getDesc());
