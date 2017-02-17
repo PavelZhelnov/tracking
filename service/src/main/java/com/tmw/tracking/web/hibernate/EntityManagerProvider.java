@@ -70,7 +70,6 @@ public class EntityManagerProvider {
     public void applyGlobalFilters(final User user) {
         if (user == null || getEntityManager() == null) return;
         final Session session = getEntityManager().unwrap(Session.class);
-        //TODO
     }
 
     public void applyGlobalFilters() {

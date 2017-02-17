@@ -75,7 +75,6 @@ public class MainController extends BaseController {
         vars.put("version", serverVersion);
         vars.put("environment", environment);
         final List<JobInfo> jobInfo = new ArrayList<JobInfo>();
-        //TODO
         vars.put("jobInfo", jobInfo);
         vars.put("angular", true);
         return new Viewable("/status", vars);

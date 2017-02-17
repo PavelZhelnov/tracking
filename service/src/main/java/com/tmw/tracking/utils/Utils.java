@@ -175,7 +175,7 @@ public class Utils extends DomainUtils {
         return stringWriter.toString();
     }
 
-    public static String toJsonWithDate(Object object) {   //TODO this is  hack for date, need refactor whole jersey in a right way
+    public static String toJsonWithDate(Object object) {
         final StringWriter stringWriter = new StringWriter();
         try {
             final ObjectMapper mapper = new ObjectMapper();

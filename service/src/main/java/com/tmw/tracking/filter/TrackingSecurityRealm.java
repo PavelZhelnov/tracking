@@ -4,10 +4,10 @@ import com.tmw.tracking.entity.AuthenticatedUser;
 import com.tmw.tracking.entity.Role;
 import com.tmw.tracking.entity.User;
 import com.tmw.tracking.service.AuthenticationService;
-import com.tmw.tracking.service.impl.AuthenticationServiceImpl;
 import com.tmw.tracking.service.PermissionService;
+import com.tmw.tracking.service.impl.AuthenticationServiceImpl;
 import com.tmw.tracking.utils.GuiceInstanceHolder;
-import com.tmw.tracking.utils.HexGenerator;
+import com.tmw.tracking.utils.Utils;
 import com.tmw.tracking.web.hibernate.EntityManagerProvider;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -51,7 +51,7 @@ public class TrackingSecurityRealm extends AuthorizingRealm {
                 final String username = upToken.getUsername() != null ? upToken.getUsername().toUpperCase() : "";
                 final String password = upToken.getPassword() != null ? String.valueOf(upToken.getPassword()) : null;
                 final AuthenticatedUser user = authenticationLogic.login(username, password);
-                return new TrackingAuthenticationInfo(user.getUser(), HexGenerator.md5(password));
+                return new TrackingAuthenticationInfo(user.getUser(), Utils.encryptPassword(password));
             } else if(token instanceof TrackingAuthenticationToken){
                 return new TrackingAuthenticationInfo(authenticationLogic.validateUser((String)token.getCredentials()), token.getCredentials());
             }
