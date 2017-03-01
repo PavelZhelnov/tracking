@@ -20,15 +20,6 @@ public interface RoleDao {
      * @return the collection of {@code Role}
      */
     List<Role> getAll();
-    /**
-     * Retrieves the collection of {@link Role Role}
-     * @return the collection of {@code Role}
-     */
-    Map<RoleType,Role> getAllRoleTypes();
-    /**
-     * Retrieves the collection of {@link Role Role}
-     * @return the collection of {@code Role}
-     */
 
     /**
      * Retrieves the {@link Role Role} by ID
@@ -36,5 +27,9 @@ public interface RoleDao {
      * @param roleType the {@code Role} type. Cannot be {@code null}
      * @return the {@code Role}
      */
-    Role getByRoleType(RoleType roleType);
+    Role getByRoleName(String roleName);
+
+    Role update(Role role);
+
+    void delete(Role role);
 }

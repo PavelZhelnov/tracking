@@ -1,12 +1,24 @@
 package com.tmw.tracking.domain;
 
 public enum PermissionType {
-    SHOW_USERS,
-    SHOW_SEARCH_ORDER,
-    SHOW_STATUS,
-    SHOW_LOGS,
-    ACCESS_ALL_STORES,
-    LOGIN_APP,
-    LOGIN_WEB,
-    JOB_STATUS,
+    SHOW_TRANSACTIONS("Show all transactions"),
+    SHOW_DETAILS("Show details on transaction"),
+    SHOW_WORKFLOW("Show the workflow"),
+    SHOW_DICTIONARIES("Show dictionaries"),
+    SHOW_ROLES("Role managements"),
+    SHOW_USERS("User management"),
+    SHOW_STATUS("Status page"),
+    SHOW_LOGS("Logs page"),
+    LOGIN_APP("Login availability to site"),
+    JOB_STATUS("Access to jobs page");
+
+    private String description;
+
+    PermissionType(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

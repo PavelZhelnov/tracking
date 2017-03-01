@@ -17,7 +17,7 @@ public class JavaMysqlConnection {
     public Connection getConnection() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn =  DriverManager.getConnection("jdbc:mysql://" + host + "/" + db, userName, password);
+            Connection conn =  DriverManager.getConnection("jdbc:mysql://" + host + "/" + db+"?autoReconnect=true&amp;failOverReadOnly=false&amp;maxReconnects=10", userName, password);
             return conn;
         }catch(Exception e){
             e.printStackTrace();

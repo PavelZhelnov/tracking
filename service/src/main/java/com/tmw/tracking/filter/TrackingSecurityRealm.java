@@ -72,7 +72,7 @@ public class TrackingSecurityRealm extends AuthorizingRealm {
         Collection<Role> roles = user.getRoles();
         if(roles != null) {
             for(Role role : roles) {
-                roleSet.add(role.getType().name());
+                roleSet.add(role.getRoleName());
             }
         }
         return new SimpleAuthorizationInfo(roleSet);

@@ -1,9 +1,9 @@
 package com.tmw.tracking.dao.impl;
 
 import com.google.inject.Singleton;
+import com.tmw.tracking.Transaction;
 import com.tmw.tracking.dao.RoleDao;
 import com.tmw.tracking.entity.Role;
-import com.tmw.tracking.entity.enums.RoleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,9 +11,7 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Singleton
 public class RoleDaoImpl implements RoleDao {
@@ -43,20 +41,32 @@ public class RoleDaoImpl implements RoleDao {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @see RoleDao#getById(Long)
-     */
     @Override
-    public Role getByRoleType(final RoleType roleType) {
-        final TypedQuery<Role> query = entityManager.createQuery("from Role where type = :type", Role.class);
-        query.setParameter("type", roleType);
+    public Role getByRoleName(String roleName) {
+        final TypedQuery<Role> query = entityManager.createQuery("from Role where roleName = :roleName", Role.class);
+        query.setParameter("roleName", roleName);
         try {
             return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    @Transaction
+    @Override
+    public Role update(Role role) {
+        if (role.getId() == null) {
+            entityManager.persist(role);
+        } else {
+            entityManager.merge(role);
+        }
+        return role;
+    }
+
+    @Transaction
+    @Override
+    public void delete(Role role) {
+        entityManager.remove(role);
     }
 
     /**
@@ -66,17 +76,8 @@ public class RoleDaoImpl implements RoleDao {
      */
     @Override
     public List<Role> getAll() {
-        final TypedQuery<Role> query = entityManager.createQuery("from Role order by type", Role.class);
+        final TypedQuery<Role> query = entityManager.createQuery("from Role order by roleName", Role.class);
         return query.getResultList();
     }
 
-    @Override
-    public Map<RoleType, Role> getAllRoleTypes() {
-        List<Role> roles = getAll();
-        Map<RoleType, Role> map = new HashMap<RoleType, Role>(roles.size());
-        for (Role role : roles) {
-            map.put(role.getType(), role);
-        }
-        return map;
-    }
 }

@@ -2,63 +2,71 @@ package com.tmw.tracking.service.impl;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
-import com.tmw.tracking.entity.enums.RoleType;
+import com.tmw.tracking.dao.PermissionDao;
+import com.tmw.tracking.dao.RoleDao;
+import com.tmw.tracking.entity.Role;
 import com.tmw.tracking.service.PermissionService;
-import com.tmw.tracking.domain.PermissionType;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.permission.RolePermissionResolver;
 import org.apache.shiro.authz.permission.WildcardPermission;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class PermissionServiceImpl implements PermissionService, RolePermissionResolver {
-    private static Map<RoleType, Set<PermissionType>> rolePermMap = new LinkedHashMap<RoleType, Set<PermissionType>>();
-    private static Map<String, Collection<Permission>> permMap = new HashMap<String, Collection<Permission>>();
 
-    static {
+    private static Map<String, Collection<Permission>> permMap = new HashMap<String, Collection<Permission>>();
+    private PermissionDao permissionDao;
+    private RoleDao roleDao;
+    /*static {
         rolePermMap.put(RoleType.SYSTEM_ADMIN, new HashSet<PermissionType>(Arrays.asList(
-                PermissionType.SHOW_SEARCH_ORDER,
                 PermissionType.SHOW_USERS,
-                PermissionType.ACCESS_ALL_STORES,
+                PermissionType.SHOW_ROLES,
                 PermissionType.LOGIN_APP,
-                PermissionType.LOGIN_WEB,
                 PermissionType.JOB_STATUS
         )));
 
         rolePermMap.put(RoleType.USER, new HashSet<PermissionType>(Arrays.asList(
-                PermissionType.SHOW_SEARCH_ORDER,
-                PermissionType.ACCESS_ALL_STORES,
-                PermissionType.LOGIN_APP,
-                PermissionType.LOGIN_WEB
+                PermissionType.LOGIN_APP
                 )));
 
-    }
+    }*/
 
     @Inject
-    public PermissionServiceImpl() {
+    public PermissionServiceImpl(final PermissionDao permissionDao,
+                                 final RoleDao roleDao) {
+        this.permissionDao = permissionDao;
+        this.roleDao = roleDao;
         init();
     }
 
     private void init() {
-        for (Map.Entry<RoleType, Set<PermissionType>> entry : rolePermMap.entrySet()) {
-            RoleType role = entry.getKey();
-            Set<PermissionType> permissionTypes = entry.getValue();
+
+        for (Role role : roleDao.getAll()) {
             Collection<Permission> permissions = new HashSet<Permission>();
-            for (PermissionType permissionType : permissionTypes) {
-                permissions.add(new WildcardPermission(permissionType.name()));
+            for (com.tmw.tracking.entity.Permission permission: role.getPermissionList()) {
+                permissions.add(new WildcardPermission(permission.getName().name()));
             }
-            permMap.put(role.name(), permissions);
+            permMap.put(role.getRoleName(), permissions);
         }
     }
 
     @Override
-    public Collection<PermissionType> getPermissions(RoleType role) {
-        return rolePermMap.get(role);
+    public Collection<com.tmw.tracking.entity.Permission> getPermissions(Role role) {
+        return role.getPermissionList();
     }
 
     @Override
     public Collection<Permission> resolvePermissionsInRole(String roleString) {
         return permMap.get(roleString);
+    }
+
+    @Override
+    public List<com.tmw.tracking.entity.Permission> getAllPermissions() {
+        return permissionDao.getAllPermissions();
     }
 }

@@ -30,8 +30,8 @@ import java.util.TimeZone;
 public abstract class TrackingBaseUnitTest {
     private static final Logger logger = LoggerFactory.getLogger(TrackingBaseUnitTest.class);
     private static final String DATA_XML = "test-data.xml";
-    public static final String DEFAULT_USER_ID = "PZ7";
-    public static final String DEFAULT_USER_PASS = "blablab";
+    public static final String DEFAULT_USER_ID = "test@example.com";
+    public static final String DEFAULT_USER_PASS = "Admin123";
 
     protected static Injector injector;
     private UserDao userDao;
@@ -71,7 +71,7 @@ public abstract class TrackingBaseUnitTest {
 
         final TrackingSecurityRealm trackingSecurityRealm = new TestTrackingSecurityRealm();
         final TrackingCredentialsMatcher matcher = new TrackingCredentialsMatcher();
-        matcher.setHashAlgorithmName("md5");
+        matcher.setHashAlgorithmName("sha-256");
         trackingSecurityRealm.setCredentialsMatcher(matcher);
         SecurityUtils.setSecurityManager(new DefaultSecurityManager(trackingSecurityRealm));
 

@@ -3,13 +3,14 @@
     <persistence-unit name="tracking-rest" transaction-type="RESOURCE_LOCAL">
 
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <non-jta-data-source>java:comp/env/jdbc/tracking</non-jta-data-source>
+        <!--non-jta-data-source>java:comp/env/jdbc/tracking</non-jta-data-source-->
 
         <class>com.tmw.tracking.entity.AuthenticatedUser</class>
         <class>com.tmw.tracking.entity.ContainerType</class>
         <class>com.tmw.tracking.entity.Driver</class>
         <class>com.tmw.tracking.entity.JobStatusInfo</class>
         <class>com.tmw.tracking.entity.Role</class>
+        <class>com.tmw.tracking.entity.Permission</class>
         <class>com.tmw.tracking.entity.Terminal</class>
         <class>com.tmw.tracking.entity.Transaction</class>
         <class>com.tmw.tracking.entity.TransactionDetails</class>
@@ -21,8 +22,19 @@
         <properties>
             <property name="hibernate.archive.autodetection" value="class, hbm" />
             <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLInnoDBDialect" />
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+            <property name="hibernate.connection.url" value="jdbc:mysql://162.253.124.32:3306/sotrackc_tracking?autoReconnect=true&amp;failOverReadOnly=false&amp;maxReconnects=10" />
+            <property name="hibernate.connection.username" value="sotrackc_project" />
+            <property name="hibernate.connection.password" value="33_Vcklydc_'Y" />
             <property name="hibernate.hbm2ddl.auto" value="update" />
+            <property name="hibernate.c3p0.min_size" value="5"/>
+            <property name="hibernate.c3p0.max_size" value="20"/>
+            <property name="hibernate.c3p0.timeout" value="1800"/>
+            <property name="hibernate.c3p0.max_statements" value="50"/>
+            <property name="hibernate.connection.provider_class" value="org.hibernate.connection.C3P0ConnectionProvider"/>
+            <property name="hibernate.c3p0.preferredTestQuery" value="SELECT 1"/>
+            <property name="hibernate.c3p0.testConnectionOnCheckout" value="true"/>
 <!--
             <property name="hibernate.hbm2ddl.auto" value="update" />
 -->

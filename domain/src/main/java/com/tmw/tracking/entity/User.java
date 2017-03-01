@@ -82,10 +82,10 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public boolean hasRole(RoleType roleType) {
+    public boolean hasRole(String roleName) {
         if (roles != null) {
             for (final Role role : roles) {
-                if (roleType == role.getType())
+                if (roleName.equals(role.getRoleName()))
                     return true;
             }
         }

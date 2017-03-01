@@ -4,8 +4,11 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.sun.jersey.api.view.Viewable;
 import com.tmw.tracking.dao.RoleDao;
+import com.tmw.tracking.entity.Permission;
 import com.tmw.tracking.entity.Role;
 import com.tmw.tracking.entity.User;
+import com.tmw.tracking.entity.support.RoleInfo;
+import com.tmw.tracking.service.PermissionService;
 import com.tmw.tracking.service.UserService;
 import com.tmw.tracking.service.impl.AuthenticationServiceImpl;
 import com.tmw.tracking.utils.Utils;
@@ -24,6 +27,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -33,12 +37,14 @@ public class UserController extends BaseController {
 
     private final UserService userService;
     private final RoleDao roleDao;
+    private final PermissionService permissionService;
     private final static Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Inject
-    public UserController(final UserService userService, final RoleDao roleDao) {
+    public UserController(final UserService userService, final RoleDao roleDao, final PermissionService permissionService) {
         this.userService = userService;
         this.roleDao = roleDao;
+        this.permissionService = permissionService;
     }
 
     @GET
@@ -53,6 +59,104 @@ public class UserController extends BaseController {
         vars.put("environment", environment);
         return new Viewable("/userstore/userManagement", vars);
     }
+
+    @GET
+    @Produces(MediaType.TEXT_HTML)
+    @Path("/roleManagement")
+    public Viewable getRoleManagement() {
+        User authenticatedUser = AuthenticationServiceImpl.getAuthenticatedUser();
+        final Map<String, Object> vars = new HashMap<String, Object>();
+        vars.put("angular", true);
+        vars.put("user", authenticatedUser);
+        vars.put("roles", roleDao.getAll());
+        vars.put("permissions", permissionService.getAllPermissions());
+        vars.put("environment", environment);
+        return new Viewable("/userstore/roleManagement", vars);
+    }
+
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getAllRoles")
+    public List<Role> getAllRoles() {
+        User authenticatedUser = AuthenticationServiceImpl.getAuthenticatedUser();
+        return roleDao.getAll();
+    }
+
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getAllPermissions")
+    public List<Permission> getAllPermissions() {
+        return permissionService.getAllPermissions();
+    }
+
+
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getRole")
+    public RoleInfo getRole(@QueryParam("id") final Long id) {
+        RoleInfo roleInfo = new RoleInfo();
+        roleInfo.setRole(roleDao.getById(id));
+        roleInfo.setPermissions(roleInfo.getRole().getPermissionList());
+        roleInfo.setAllPermissions(permissionService.getAllPermissions());
+        return roleInfo;
+    }
+
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/saveRole")
+    public String saveRole(RoleInfo roleInfo) {
+        final Map<String, Object> vars = new HashMap<String, Object>();
+        if (roleInfo.getRole() == null) {
+            vars.put("errorMessage", "Role is empty");
+            return Utils.toJson(vars);
+        }
+
+        Role role = roleInfo.getRole().getId() != null?roleDao.getById(roleInfo.getRole().getId()): new Role();
+        role.setRoleName(roleInfo.getRole().getRoleName());
+        role.setPermissionList(roleInfo.getPermissions());
+        try {
+            roleDao.update(role);
+        } catch (Exception e) {
+            logger.error("", e);
+            vars.put("errorMessage", "Error during saving Role " + e.getMessage());
+        }
+        return Utils.toJson(vars);
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/deleteRole")
+    public String deleteRole(RoleInfo roleInfo) {
+        final Map<String, Object> vars = new HashMap<String, Object>();
+        if (roleInfo.getRole() == null) {
+            vars.put("errorMessage", "role is empty");
+            return Utils.toJson(vars);
+        }
+
+        Role role = roleDao.getById(roleInfo.getRole().getId());
+        if (role == null) {
+            vars.put("errorMessage", "role is not found");
+            return Utils.toJson(vars);
+        }
+        try {
+            roleDao.delete(role);
+        } catch (Exception e) {
+            logger.error("", e);
+            vars.put("errorMessage", "Error during deleting Role " + e.getMessage());
+        }
+        return Utils.toJson(vars);
+    }
+
+
+
+
+
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
@@ -144,7 +248,7 @@ public class UserController extends BaseController {
         Set<Role> roleHashSet = new HashSet<Role>();
         if (roles != null && !roles.isEmpty()) {
             for (Role role : roles) {
-                Role roleFromDb = roleDao.getByRoleType(role.getType());
+                Role roleFromDb = roleDao.getByRoleName(role.getRoleName());
                 roleHashSet.add(roleFromDb);
             }
         }

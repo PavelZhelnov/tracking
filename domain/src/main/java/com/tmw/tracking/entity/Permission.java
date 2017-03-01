@@ -2,6 +2,7 @@ package com.tmw.tracking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.tmw.tracking.domain.PermissionType;
 import com.tmw.tracking.entity.enums.RoleType;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -13,21 +14,21 @@ import java.io.Serializable;
 import java.util.Set;
 
 @Entity
-@Table(name="tracking_role")
+@Table(name="tracking_permission")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Role implements Serializable{
+public class Permission implements Serializable{
 
     private static final long serialVersionUID = -3467279920723998768L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false, name="role_name")
-    private String roleName;
 
-    @JsonIgnore
-    @OneToMany(fetch = FetchType.EAGER)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private Set<Permission> permissionList;
+    @Enumerated(EnumType.STRING)
+    @Column(unique = true, nullable = false, name="name")
+    private PermissionType name;
+
+    @Column(nullable = true, name = "description")
+    private String description;
 
 
     public Long getId() {
@@ -38,22 +39,21 @@ public class Role implements Serializable{
         this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public PermissionType getName() {
+        return name;
     }
 
-    public void setRoleName(String name) {
-        this.roleName = name;
+    public void setName(PermissionType name) {
+        this.name = name;
     }
 
-    public Set<Permission> getPermissionList() {
-        return permissionList;
+    public String getDescription() {
+        return description;
     }
 
-    public void setPermissionList(Set<Permission> permissionList) {
-        this.permissionList = permissionList;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
 
     // ========================================================================
     /**
@@ -63,7 +63,8 @@ public class Role implements Serializable{
     public int hashCode(){
         final HashCodeBuilder builder = new HashCodeBuilder();
         builder.append(getId());
-        builder.append(getRoleName());
+        builder.append(getDescription());
+        builder.append(getName());
         return builder.toHashCode();
     }
 
@@ -72,15 +73,16 @@ public class Role implements Serializable{
      * @see Object#equals(Object)
      */
     public boolean equals(final Object object){
-        if (!(object instanceof Role))
+        if (!(object instanceof Permission))
             return false;
         if (this == object)
             return true;
-        final Role obj = (Role) object;
+        final Permission obj = (Permission) object;
 
         return new EqualsBuilder()
                 .append(getId(), obj.getId())
-                .append(getRoleName(), obj.getRoleName())
+                .append(getName(), obj.getName())
+                .append(getDescription(), obj.getDescription())
                 .isEquals();
     }
 }

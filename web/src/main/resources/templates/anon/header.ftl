@@ -11,8 +11,6 @@
     <link href="${contextPath}/css/kendo.common.css" rel="stylesheet" media="screen">
     <link href="${contextPath}/css/kendo.bootstrap.css" rel="stylesheet" media="screen">
     <link href="${contextPath}/css/fullcalendar.css" rel="stylesheet" media="screen">
-    <link href="${contextPath}/css/ng-table.min.css" rel="stylesheet" media="screen">
-
     <!-- ================================================================== -->
     <!-- jquery -->
     <script src="${contextPath}/js/jquery/jquery.min.js"></script>
@@ -30,7 +28,6 @@
     <script src="${contextPath}/js/support.js"></script>
 
 
-
     <!-- angular -->
 <#if angular??>
     <script src="${contextPath}/js/angular/angular.js"></script>
@@ -45,8 +42,6 @@
     <script src="${contextPath}/js/moment.js"></script>
     <script src="${contextPath}/js/moment-timezone.js"></script>
     <script src="${contextPath}/js/angular/angular-ui/calendar.js"></script>
-    <script src="${contextPath}/js/angular/angular-ui/ng-table.min.js"></script>
-
 
 </#if>
 </head>
@@ -60,61 +55,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a href="${contextPath}/tmw/status" class="brand">Tracking Maintenance Tools (${environment})</a>
+            <a href="${contextPath}/tmw/status" class="brand">So-Tracking Management</a>
         <#if !hide_top_nav??>
             <div class="nav-collapse collapse">
                 <ul class="nav">
-                    <#if shiro.isPermitted("SHOW_STATUS")>
-                        <li <#if top_nav_selected == 'status'>class="active"</#if>><a href="${contextPath}/tmw/status">Status</a>
-                        </li>
-                    </#if>
                     <li><a href="${contextPath}/tmw/tracking/trackContainer">Track Container</a></li>
-                    <#if shiro.isPermitted("SHOW_USERS") || shiro.isPermitted("SHOW_ROLE")||
-                    shiro.isPermitted("SHOW_USER_MANAGEMENT") || shiro.isPermitted("SHOW_DEVICE_MANAGEMENT")>
-                        <li class="dropdown">
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">System Tools<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a href="${contextPath}/tmw/anon/index">Home</a></li>
+                    <li><a href="${contextPath}/tmw/anon/showpage?page=contact">Contact</a></li>
+                    <li><a href="${contextPath}/tmw/anon/showpage?page=test">Test Page</a></li>
 
-                                <#if shiro.isPermitted("SHOW_USERS")>
-                                    <li><a href="${contextPath}/tmw/userstore/userManagement">User management</a></li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_ROLES")>
-                                    <li><a href="${contextPath}/tmw/userstore/roleManagement">Role management</a></li>
-                                </#if>
-
-                                <#if shiro.isPermitted("SHOW_SYSTEM_CONFIG_MANAGEMENT")>
-                                    <li><a href="${contextPath}/tmw/storeInfo/config">System Configuration</a></li>
-                                </#if>
-                                <#if shiro.isPermitted("SHOW_SYSTEM_MONITORING")>
-                                    <li><a href="${contextPath}/tmw/monitoring/tests">System Monitoring</a></li>
-                                </#if>
-
-                            </ul>
-                        </li>
+                    <#if shiro.principal??>
+                        <li><a href="${contextPath}/tmw/status">Admin</a></li>
+                    <#else>
+                        <li><a href="${contextPath}/tmw/login">Login</a></li>
                     </#if>
                 </ul>
             </div>
-            <#if shiro.principal??>
-                <div class="navbar-inverse brand" style="position: absolute; left: 50px;top:35px;">
-                ${shiro.principal.email}
-                    <#if shiro.principal.roles?? && shiro.principal.roles?size &gt; 0>
-                        (${shiro.principal.roles[0].roleName})
-                    <#else>
-                        (None)
-                    </#if>
-
-                </div>
-
-                <div style="position: absolute; left: 1000px;top:2px;">
-                    <ul class="nav nav-pills">
-                        <li><a href="${contextPath}/tmw/logout">Logout</a></li>
-                    </ul>
-                </div>
-            </#if>
-        </#if>
+       </#if>
         </div>
     </div>
 </div>
 <div class="container">
-    <div style="padding-top: 60px; padding-bottom: 60px;">
+<div style="padding-top: 60px; padding-bottom: 60px;">

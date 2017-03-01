@@ -1,6 +1,5 @@
 <#assign page_title = "Login">
-<#assign hide_top_nav = true >
-<#include "header.ftl"/>
+<#include "anon/header.ftl"/>
 <fieldset>
     <legend>Login:</legend>
     <form id="showOrderInfo" action="${contextPath}/tmw/login" method="post">
@@ -20,4 +19,4 @@
     document.getElementById("username").focus();
 </script>
 
-<#include "footer.ftl"/>
+<#include "anon/footer.ftl"/>

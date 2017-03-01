@@ -5,6 +5,7 @@ import com.google.inject.matcher.Matchers;
 import com.tmw.tracking.Transaction;
 import com.tmw.tracking.dao.AuthenticatedUserDao;
 import com.tmw.tracking.dao.JobStatusInfoDao;
+import com.tmw.tracking.dao.PermissionDao;
 import com.tmw.tracking.dao.RoleDao;
 import com.tmw.tracking.dao.TrackingSiteDao;
 import com.tmw.tracking.dao.UserDao;
@@ -12,6 +13,7 @@ import com.tmw.tracking.dao.impl.AuthenticatedUserDaoImpl;
 import com.tmw.tracking.dao.impl.DriverDao;
 import com.tmw.tracking.dao.impl.DriverDaoImpl;
 import com.tmw.tracking.dao.impl.JobStatusInfoDaoImpl;
+import com.tmw.tracking.dao.impl.PermissionDaoImpl;
 import com.tmw.tracking.dao.impl.RoleDaoImpl;
 import com.tmw.tracking.dao.impl.TrackingSiteDaoImpl;
 import com.tmw.tracking.dao.impl.TransactionDao;
@@ -49,6 +51,7 @@ public class DaoModule extends AbstractModule {
         bind(TrackingSiteDao.class).to(TrackingSiteDaoImpl.class);
         bind(DriverDao.class).to(DriverDaoImpl.class);
         bind(TransactionDao.class).to(TransactionDaoImpl.class);
+        bind(PermissionDao.class).to(PermissionDaoImpl.class);
 
     }
 }

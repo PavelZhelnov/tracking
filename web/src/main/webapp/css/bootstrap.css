@@ -3812,7 +3812,7 @@ input[type="submit"].btn.btn-mini {
     border-radius: 6px 0 6px 6px;
 }
 .navbar-inverse .navbar-inner, footer {
-    background-color: #1b1b1b;
+    background-color: #128ce8;
     background-image: -moz-linear-gradient(top, #222222, #111111);
     background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#111111));
     background-image: -webkit-linear-gradient(top, #222222, #111111);
@@ -6229,7 +6229,7 @@ button.close {
     .navbar-inverse .nav-collapse .nav > li > a:focus,
     .navbar-inverse .nav-collapse .dropdown-menu a:hover,
     .navbar-inverse .nav-collapse .dropdown-menu a:focus {
-        background-color: #111111;
+        background-color: #128ce8;
     }
     .nav-collapse.in .btn-group {
         margin-top: 5px;
