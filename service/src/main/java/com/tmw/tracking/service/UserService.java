@@ -3,6 +3,8 @@ package com.tmw.tracking.service;
 import com.tmw.tracking.domain.LoginRequest;
 import com.tmw.tracking.entity.User;
 
+import java.util.List;
+
 /**
  * Created by ankultepin on 6/3/2015.
  */
@@ -18,9 +20,13 @@ public interface UserService {
      */
     CredentialsStatus validateUserCredentials(LoginRequest loginRequest);
 
+    List<User> getAllUsers();
+
     User getUserByEmail(String email);
 
     User getAnyUserByEmail(String email);
+
+    User getById(Long id);
 
     void update(User user);
 

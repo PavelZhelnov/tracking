@@ -156,20 +156,30 @@ public class UserController extends BaseController {
 
 
 
+    /********** USER AREA ********/
+
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/getAllUsers")
+    public List<User> getAllUser() {
+        return userService.getAllUsers();
+    }
+
 
 
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/find")
-    public String getUser(@QueryParam("email") final String email) {
+    public String getUser(@QueryParam("id") final Long id) {
         final Map<String, Object> vars = new HashMap<String, Object>();
-        if (StringUtils.isBlank(email)) {
-            vars.put("errorMessage", "Incorrect email");
+        if (id == null) {
+            vars.put("errorMessage", "Incorrect id");
             return Utils.toJson(vars);
         }
         // fix me should be visibility
         User authUser = AuthenticationServiceImpl.getAuthenticatedUser();
-        User user = userService.getAnyUserByEmail(email.toUpperCase());
+        User user = userService.getById(id);
         if (user == null) {
             vars.put("errorMessage", "User not found");
             return Utils.toJson(vars);

@@ -6,7 +6,6 @@ import com.tmw.tracking.Transaction;
 import com.tmw.tracking.dao.UserDao;
 import com.tmw.tracking.entity.Role;
 import com.tmw.tracking.entity.User;
-import com.tmw.tracking.entity.enums.RoleType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,29 +30,13 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getById(final Long id) {
-        TypedQuery<User> query = entityManager.createQuery("from User where id = :id and active = true", User.class);
+        TypedQuery<User> query = entityManager.createQuery("from User where id = :id", User.class);
         query.setParameter("id", id);
         try {
             return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<User> getUsersByRoleType(final RoleType roleType) {
-        if (roleType == null) return new ArrayList<User>();
-
-        final TypedQuery<User> typedQuery = entityManager.createQuery("select distinct u from User u " +
-                "left join u.roles r " +
-                "where r.type = :roleType and u.active = :active order by u.uniqueId", User.class);
-        typedQuery.setParameter("roleType", roleType);
-        typedQuery.setParameter("active", true);
-
-        return typedQuery.getResultList();
     }
 
     @Override

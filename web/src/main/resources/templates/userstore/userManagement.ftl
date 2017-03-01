@@ -3,11 +3,31 @@
 <#include "*/header.ftl"/>
 <fieldset ng-app="UserManagement">
 
-    <div ng-controller="UserManagementController">
+    <div ng-controller="userController">
 
+        <span id="errorMessage" class="text-error">{{errorMessage}}</span>
+
+
+        <table class="table table-bordered table-striped" show-filter="true"  ng-table="tableParams">
+            <tr ng-repeat="u in users" ng-click="editUser(u)">
+                <td data-title="'ID'">
+                    {{r.id}}</td>
+                <td data-title="'First Name'" filter="{ firstName: 'text'}" sortable="'firstName'">
+                    {{u.firstName}}</td>
+                <td data-title="'Last Name'" filter="{ lastName: 'text'}" sortable="'lastName'">
+                    {{u.lastName}}</td>
+                <td data-title="'Email'" filter="{ email: 'text'}" sortable="'emailName'">
+                    {{u.email}}</td>
+                <td data-title="'Active'" sortable="'active'">
+                    {{u.active}}</td>
+            </tr>
+        </table>
+
+
+        <button type="button" class="btn" ng-click="createUser(userId)">Create a New User</button>
 
         <!--Search user panel-->
-        <div class="span10" style="position: relative; ">
+        <!--div class="span10" style="position: relative; ">
             <div class="controls form-search well">
                 <input id="userId" type="text" class="span3 offset2" ng-model="userId" placeholder="Enter User Email">
                 <button id="searchUser" class="btn" type="button" ng-click="search()">Search</button>
@@ -17,12 +37,10 @@
                 <img id="loading" src="${contextPath}/img/ajax-loader.gif" alt="Loading..." ng-show="loading"/>
                 <span id="errorMessage" class="text-error">{{errorMessage}}</span>
             </div>
-        </div>
+        </div-->
 
         <form id="showPage" class="span10" action="#" method="post" ng-show="user">
             <h4 class="span7 pull-left">{{ title }}</h4>
-            <span class="badge badge-important" ng-show="!user.active">DELETED</span>
-            <span class="badge badge-success" ng-show="user.active">ACTIVE</span>
 
             <div class="row span10 controls">
                 <div class="row pull-left">
@@ -44,6 +62,8 @@
                 </div>
 
 
+                <span class="badge badge-important" ng-show="!user.active">DELETED</span>
+                <span class="badge badge-success" ng-show="user.active">ACTIVE</span>
 
             </div>
 
@@ -52,7 +72,7 @@
 
 
             <label><b>ROLES:<b>&nbsp;</label>
-            <select multiple="multiple" ng-model="user.roles" ng-options="role.roleName for role in stateList">
+            <select multiple="multiple" ng-model="user.roles" ng-options="role.roleName for role in roleList">
             </select>
             </br>
             <button class="btn" style="color:black;" type="button" ng-click="clearRoles()">Clear Roles</button>
@@ -66,7 +86,7 @@
 
             <div class="span9" style="margin-left:0;margin-top:20px;">
                 <div class="span2 pull-left" style="margin-left:0;">
-                    <button class="btn" style="color:red;" ng-show="user.active" type="button" ng-click="switchUser(false)">Delete User</button>
+                    <button class="btn" style="color:red;" ng-show="user.id!=null" type="button" ng-click="switchUser(false)">Delete User</button>
                     <button class="btn" style="color:darkgreen;" ng-show="!user.active" type="button" ng-click="switchUser(true)">Actiate User</button>
                 </div>
 
@@ -82,22 +102,29 @@
 
 <script type="text/javascript">
 
-    function UserManagementController($scope, $http, $modal, $q) {
+    var app = angular.module('app', ["ngTable", "kendo.directives", '$strap.directives']);
 
+    app.controller("userController", ["NgTableParams",  "$scope", "$filter", "$http", "$modal", "$q", function ( NgTableParams, $scope, $filter, $http, $modal, $q) {
 
-
-
-        $scope.stateList = [
-           <#list roles as role>
-             {"id":"${role.id}","roleName":"${role.roleName}","type":"${role.type}"},
-           </#list>
+        $scope.roleList = [
+        <#list roles as role>
+            {"id":"${role.id}","roleName":"${role.roleName}"},
+        </#list>
         ]
 
-        $scope.displayLocationDeletePopup = false;
-        $scope.search = function () {
+        $scope.init = function() {
+            $http.get('${contextPath}/tmw/userstore/getAllUsers')
+                    .then(function(res){
+                        $scope.users = res.data;
+                    });
+
+        };
+
+        $scope.editUser = function (user) {
+            $scope.user = null;
             $scope.errorMessage = null;
             $scope.loading = true;
-            $http.get('${contextPath}/tmw/userstore/find?email=' + $scope.userId).success(function (data) {
+            $http.get('${contextPath}/tmw/userstore/find?id=' + user.id).success(function (data) {
                 $scope.loading = false;
                 if (data.errorMessage) {
                     $scope.user = null;
@@ -107,9 +134,10 @@
 
 
                     for (var i = 0; i < $scope.user.roles.length; i++) {
-                        for (var j = 0; j < $scope.stateList.length; j++) {
-                            if ($scope.stateList[j].type === $scope.user.roles[i].type) {
-                                $scope.user.roles[i] = $scope.stateList[j];
+                        for (var j = 0; j < $scope.roleList.length; j++) {
+                            console.log($scope.roleList[j].id + " " + $scope.user.roles[i].id);
+                            if ($scope.roleList[j].id == $scope.user.roles[i].id) {
+                                $scope.user.roles[i] = $scope.roleList[j];
                                 break;
                             }
                         }
@@ -118,29 +146,19 @@
 
             }).error(function (data) {
                 $scope.errorMessage = "Request error";
-                $scope.user = null;
+                $scope.roleInfo = null;
             });
         };
 
-        $scope.createUser = function (userId) {
+        $scope.createUser = function () {
             $scope.errorMessage = null;
             $scope.state = null;
             $scope.user = {
-                email: userId,
+                email: "",
                 active: true,
                 roles: [
 
                 ]};
-            return true;
-        };
-
-        $scope.changeRole = function (roleType, rName) {
-            $scope.errorMessage = null;
-            $scope.infoMessage = '';
-            $scope.state = null;
-            $scope.user.roles = roleType === "" ? [] : [
-                {type: roleType, roleName: rName}
-            ];
             return true;
         };
 
@@ -153,6 +171,8 @@
                         $scope.loading = false;
                         if (data.errorMessage) {
                             $scope.errorMessage = data.errorMessage;
+                        } else {
+                            $scope.init();
                         }
                     }).error(
                     function (data, respStatus, headers, config) {
@@ -172,6 +192,7 @@
                             $scope.errorMessage = data.errorMessage;
                         } else {
                             $scope.user = null;
+                            $scope.init();
                         }
                     }).error(
                     function (data, respStatus, headers, config) {
@@ -200,8 +221,26 @@
                     });
         };
 
-    }
-    var app = angular.module('app', [ "kendo.directives", '$strap.directives']);
+        $scope.init();
+
+
+        /*$scope.cols = [
+            {field: "firstName", title: "First Name", filter: {firstName: "text"}, show: true},
+            {field: "lastName", title: "Last Name", filter: {lastName: "text"}, show: true},
+            {field: "email", title: "Email", filter: {lastName: "text"}, show: true},
+            {field: "active", title: "Active", show: true}
+        ];*/
+
+        $scope.tableParams = new NgTableParams(
+                {
+                    page: 1,
+                    count: 5
+                },
+                { dataset: $scope.users });
+
+
+    }]);
+
 
 </script>
 <#include "*/footer.ftl"/>

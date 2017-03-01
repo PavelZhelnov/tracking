@@ -13,8 +13,6 @@
                     {{r.id}}</td>
                 <td title="'Name'" filter="{ name: 'text'}" sortable="'roleName'">
                     {{r.roleName}}</td>
-                <td title="'Type'" filter="{ type: 'text'}" sortable="'roleType'">
-                    {{r.roleType}}</td>
             </tr>
         </table>
 

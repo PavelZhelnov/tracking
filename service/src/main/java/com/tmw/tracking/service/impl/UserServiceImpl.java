@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by ankultepin on 6/3/2015.
@@ -55,6 +56,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<User> getAllUsers() {
+        return userDao.getAll();
+    }
+
+    @Override
     public User getUserByEmail(String email) {
         return userDao.getUserByEmail(email);
     }
@@ -62,6 +68,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getAnyUserByEmail(String email) {
         return userDao.getAnyUserByEmail(email);
+    }
+
+    @Override
+    public User getById(Long id) {
+        return userDao.getById(id);
     }
 
     @Override
