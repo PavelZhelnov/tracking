@@ -3,15 +3,16 @@
 <#include "*/header.ftl"/>
 <fieldset ng-app="RoleManagement">
 
-    <div ng-controller="RoleManagementController">
+    <div ng-controller="roleController">
 
         <span id="errorMessage" class="text-error">{{errorMessage}}</span>
 
-        <table class="table" show-filter="true"  data-ng-init="init()">
-            <tr ng-repeat="r in roles" ng-click="editRole(r)">
+
+        <table class="table table-bordered table-striped"  show-filter="true" ng-table="tableParams">
+            <tr ng-repeat="r in $data" ng-click="editRole(r)">
                 <td title="'ID'">
                     {{r.id}}</td>
-                <td title="'Name'" filter="{ name: 'text'}" sortable="'roleName'">
+                <td title="'Name'" filter="{ roleName: 'text'}" sortable="'roleName'">
                     {{r.roleName}}</td>
             </tr>
         </table>
@@ -56,15 +57,36 @@
 
 <script type="text/javascript">
 
+
+
+
     var app = angular.module('app', ["ngTable", "kendo.directives", '$strap.directives']);
 
-    function RoleManagementController($scope, $http, $modal, $q) {
-
+    app.controller("roleController", function($scope, $filter, $http, $q, NgTableParams) {
+        var data = [];
         $scope.allPermissions = [];
         $scope.init = function() {
             $http.get('${contextPath}/tmw/userstore/getAllRoles')
                     .then(function(res){
                         $scope.roles = res.data;
+                        data = res.data;
+
+                        $scope.tableParams = new NgTableParams({page: 1, count: 10, sorting: {
+                            roleName: 'asc'
+                        }}, {getData: function($defer, params) {
+                            if (params !=null) {
+                                filteredData = params.filter() ?
+                                        $filter('filter')(data, params.filter()) :
+                                        data;
+
+                                var orderedData = params.sorting() ?
+                                        $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+                                var page=orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                                $scope.data=page;
+                                $defer.resolve(page);
+                            }
+                        }});
+
                     });
             $http.get('${contextPath}/tmw/userstore/getAllPermissions')
                     .then(function(res){
@@ -79,20 +101,20 @@
             $scope.errorMessage = null;
             $scope.loading = true;
             $scope.selection = [];
-            $http.get('${contextPath}/tmw/userstore/getRole?id=' + role.id).success(function (data) {
+            $http.get('${contextPath}/tmw/userstore/getRole?id=' + role.id).then(function (res) {
                 $scope.loading = false;
-                if (data.errorMessage) {
+                if (res.data.errorMessage) {
                     $scope.roleInfo = null;
-                    $scope.errorMessage = data.errorMessage;
+                    $scope.errorMessage = res.data.errorMessage;
                 } else {
-                    $scope.roleInfo = data;
-                    angular.forEach(data.permissions, function(value, key) {
+                    $scope.roleInfo = res.data;
+                    angular.forEach(res.data.permissions, function(value, key) {
                         //console.log(value);
                         $scope.selection.push(value.id);
                     });
                 }
 
-            }).error(function (data) {
+            }, function error(data) {
                 $scope.errorMessage = "Request error";
                 $scope.roleInfo = null;
             });
@@ -126,17 +148,16 @@
                 });
             });
 
-            $http.post('${contextPath}/tmw/userstore/saveRole', $scope.roleInfo).success(
-                    function (data, respStatus, headers, config) {
+            $http.post('${contextPath}/tmw/userstore/saveRole', $scope.roleInfo).then(
+                    function (res, respStatus, headers, config) {
                         $scope.loading = false;
-                        if (data.errorMessage) {
-                            $scope.errorMessage = data.errorMessage;
+                        if (res.data.errorMessage) {
+                            $scope.errorMessage = res.data.errorMessage;
                         } else {
                             $scope.roleInfo = null;
                             $scope.init();
                         }
-                    }).error(
-                    function (data, respStatus, headers, config) {
+                    }, function error(data, respStatus, headers, config) {
                         $scope.loading = false;
                         $scope.errorMessage = "Request error";
                     });
@@ -148,17 +169,16 @@
             $scope.errorMessage = null;
             $scope.state = null;
             $scope.loading = true;
-            $http.post('${contextPath}/tmw/userstore/deleteRole', $scope.roleInfo).success(
-                    function (data, respStatus, headers, config) {
+            $http.post('${contextPath}/tmw/userstore/deleteRole', $scope.roleInfo).then(
+                    function (res, respStatus, headers, config) {
                         $scope.loading = false;
-                        if (data.errorMessage) {
-                            $scope.errorMessage = data.errorMessage;
+                        if (res.data.errorMessage) {
+                            $scope.errorMessage = res.data.errorMessage;
                         } else {
                             $scope.roleInfo = null;
                             $scope.init();
                         }
-                    }).error(
-                    function (data, respStatus, headers, config) {
+                    }, function error(data, respStatus, headers, config) {
                         $scope.loading = false;
                         $scope.errorMessage = "Request error";
                     });
@@ -179,7 +199,9 @@
                 $scope.selection.push(id);
             }
         };
-    }
+
+        $scope.init();
+    });
 
 
 </script>

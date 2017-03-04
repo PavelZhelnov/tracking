@@ -11,6 +11,8 @@
     <link href="${contextPath}/css/kendo.common.css" rel="stylesheet" media="screen">
     <link href="${contextPath}/css/kendo.bootstrap.css" rel="stylesheet" media="screen">
     <link href="${contextPath}/css/fullcalendar.css" rel="stylesheet" media="screen">
+    <link href="${contextPath}/css/ng-table.min.css" rel="stylesheet" media="screen">
+
     <!-- ================================================================== -->
     <!-- jquery -->
     <script src="${contextPath}/js/jquery/jquery.min.js"></script>
@@ -28,6 +30,7 @@
     <script src="${contextPath}/js/support.js"></script>
 
 
+
     <!-- angular -->
 <#if angular??>
     <script src="${contextPath}/js/angular/angular.js"></script>
@@ -42,6 +45,8 @@
     <script src="${contextPath}/js/moment.js"></script>
     <script src="${contextPath}/js/moment-timezone.js"></script>
     <script src="${contextPath}/js/angular/angular-ui/calendar.js"></script>
+    <script src="${contextPath}/js/angular/angular-ui/ng-table.min.js"></script>
+
 
 </#if>
 </head>

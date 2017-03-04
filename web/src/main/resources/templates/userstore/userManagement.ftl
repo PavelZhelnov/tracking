@@ -9,35 +9,23 @@
 
 
         <table class="table table-bordered table-striped" show-filter="true"  ng-table="tableParams">
-            <tr ng-repeat="u in users" ng-click="editUser(u)">
+            <tr ng-repeat="u in $data" ng-click="editUser(u)">
                 <td data-title="'ID'">
                     {{r.id}}</td>
                 <td data-title="'First Name'" filter="{ firstName: 'text'}" sortable="'firstName'">
                     {{u.firstName}}</td>
                 <td data-title="'Last Name'" filter="{ lastName: 'text'}" sortable="'lastName'">
                     {{u.lastName}}</td>
-                <td data-title="'Email'" filter="{ email: 'text'}" sortable="'emailName'">
+                <td data-title="'Email'" filter="{ email: 'text'}" sortable="'email'">
                     {{u.email}}</td>
                 <td data-title="'Active'" sortable="'active'">
-                    {{u.active}}</td>
+                    {{u.active? 'Yes':'No'}}</td>
             </tr>
         </table>
 
 
-        <button type="button" class="btn" ng-click="createUser(userId)">Create a New User</button>
 
-        <!--Search user panel-->
-        <!--div class="span10" style="position: relative; ">
-            <div class="controls form-search well">
-                <input id="userId" type="text" class="span3 offset2" ng-model="userId" placeholder="Enter User Email">
-                <button id="searchUser" class="btn" type="button" ng-click="search()">Search</button>
-                <span class="muted">OR if user not found,</span>
-                <button type="button" class="btn btn-link" ng-click="createUser(userId)">Create a New User
-                </button>
-                <img id="loading" src="${contextPath}/img/ajax-loader.gif" alt="Loading..." ng-show="loading"/>
-                <span id="errorMessage" class="text-error">{{errorMessage}}</span>
-            </div>
-        </div-->
+        <button type="button" class="btn" ng-click="createUser(userId)">Create a New User</button>
 
         <form id="showPage" class="span10" action="#" method="post" ng-show="user">
             <h4 class="span7 pull-left">{{ title }}</h4>
@@ -104,7 +92,7 @@
 
     var app = angular.module('app', ["ngTable", "kendo.directives", '$strap.directives']);
 
-    app.controller("userController", ["NgTableParams",  "$scope", "$filter", "$http", "$modal", "$q", function ( NgTableParams, $scope, $filter, $http, $modal, $q) {
+    app.controller("userController", function($scope, $filter, $http, $q, NgTableParams) {
 
         $scope.roleList = [
         <#list roles as role>
@@ -112,10 +100,30 @@
         </#list>
         ]
 
+        var data = [];
         $scope.init = function() {
             $http.get('${contextPath}/tmw/userstore/getAllUsers')
                     .then(function(res){
                         $scope.users = res.data;
+                        data = res.data;
+
+                        $scope.tableParams = new NgTableParams({page: 1, count: 10, sorting: {
+                            firstName: 'asc'
+                        }}, {getData: function($defer, params) {
+                            if (params !=null) {
+                                filteredData = params.filter() ?
+                                        $filter('filter')(data, params.filter()) :
+                                        data;
+
+                                var orderedData = params.sorting() ?
+                                        $filter('orderBy')(filteredData, params.orderBy()) : filteredData;
+                                var page=orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count());
+                                $scope.data=page;
+                                $defer.resolve(page);
+                            }
+                            //$defer.resolve(data);
+                        }});
+
                     });
 
         };
@@ -124,13 +132,13 @@
             $scope.user = null;
             $scope.errorMessage = null;
             $scope.loading = true;
-            $http.get('${contextPath}/tmw/userstore/find?id=' + user.id).success(function (data) {
+            $http.get('${contextPath}/tmw/userstore/find?id=' + user.id).then(function (res) {
                 $scope.loading = false;
-                if (data.errorMessage) {
+                if (res.data.errorMessage) {
                     $scope.user = null;
-                    $scope.errorMessage = data.errorMessage;
+                    $scope.errorMessage = res.data.errorMessage;
                 } else {
-                    $scope.user = data.user;
+                    $scope.user = res.data.user;
 
 
                     for (var i = 0; i < $scope.user.roles.length; i++) {
@@ -144,7 +152,7 @@
                     }
                 }
 
-            }).error(function (data) {
+            } , function error(res) {
                 $scope.errorMessage = "Request error";
                 $scope.roleInfo = null;
             });
@@ -166,16 +174,15 @@
             $scope.errorMessage = null;
             $scope.state = null;
             $scope.loading = true;
-            $http.post('${contextPath}/tmw/userstore/save', $scope.user).success(
-                    function (data, respStatus, headers, config) {
+            $http.post('${contextPath}/tmw/userstore/save', $scope.user).then(
+                    function (res, respStatus, headers, config) {
                         $scope.loading = false;
                         if (data.errorMessage) {
-                            $scope.errorMessage = data.errorMessage;
+                            $scope.errorMessage = res.data.errorMessage;
                         } else {
                             $scope.init();
                         }
-                    }).error(
-                    function (data, respStatus, headers, config) {
+                    }, function error(data, respStatus, headers, config) {
                         $scope.loading = false;
                         $scope.errorMessage = "Request error";
                     });
@@ -185,17 +192,16 @@
             $scope.errorMessage = null;
             $scope.state = null;
             $scope.loading = true;
-            $http.get('${contextPath}/tmw/userstore/switch?email=' + $scope.user.email + '&mode='+mode).success(
-                    function (data, respStatus, headers, config) {
+            $http.get('${contextPath}/tmw/userstore/switch?email=' + $scope.user.email + '&mode='+mode).then(
+                    function (res, respStatus, headers, config) {
                         $scope.loading = false;
-                        if (data.errorMessage) {
-                            $scope.errorMessage = data.errorMessage;
+                        if (res.data.errorMessage) {
+                            $scope.errorMessage = res.data.errorMessage;
                         } else {
                             $scope.user = null;
                             $scope.init();
                         }
-                    }).error(
-                    function (data, respStatus, headers, config) {
+                    }, function error(data, respStatus, headers, config) {
                         $scope.errorMessage = "Request error";
                         $scope.loading = false;
                     });
@@ -205,17 +211,16 @@
             $scope.errorMessage = null;
             $scope.state = null;
             $scope.loading = true;
-            $http.get('${contextPath}/tmw/userstore/clearRoles?email=' + $scope.user.email).success(
-                    function (data, respStatus, headers, config) {
+            $http.get('${contextPath}/tmw/userstore/clearRoles?email=' + $scope.user.email).then(
+                    function (res, respStatus, headers, config) {
                         $scope.loading = false;
-                        if (data.errorMessage) {
-                            $scope.errorMessage = data.errorMessage;
+                        if (res.data.errorMessage) {
+                            $scope.errorMessage = res.data.errorMessage;
                         } else {
                             $scope.user.roles = [];
 
                         }
-                    }).error(
-                    function (data, respStatus, headers, config) {
+                    }, function error(data, respStatus, headers, config) {
                         $scope.errorMessage = "Request error";
                         $scope.loading = false;
                     });
@@ -223,23 +228,7 @@
 
         $scope.init();
 
-
-        /*$scope.cols = [
-            {field: "firstName", title: "First Name", filter: {firstName: "text"}, show: true},
-            {field: "lastName", title: "Last Name", filter: {lastName: "text"}, show: true},
-            {field: "email", title: "Email", filter: {lastName: "text"}, show: true},
-            {field: "active", title: "Active", show: true}
-        ];*/
-
-        $scope.tableParams = new NgTableParams(
-                {
-                    page: 1,
-                    count: 5
-                },
-                { dataset: $scope.users });
-
-
-    }]);
+    });
 
 
 </script>

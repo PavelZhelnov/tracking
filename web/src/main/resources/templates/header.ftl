@@ -70,7 +70,7 @@
                     </#if>
                     <li><a href="${contextPath}/tmw/tracking/trackContainer">Track Container</a></li>
                     <#if shiro.isPermitted("SHOW_USERS") || shiro.isPermitted("SHOW_ROLE")||
-                    shiro.isPermitted("SHOW_USER_MANAGEMENT") || shiro.isPermitted("SHOW_DEVICE_MANAGEMENT")>
+                    shiro.isPermitted("SHOW_USER_MANAGEMENT")>
                         <li class="dropdown">
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">System Tools<b class="caret"></b></a>
                             <ul class="dropdown-menu">
@@ -81,6 +81,9 @@
                                 </#if>
                                 <#if shiro.isPermitted("SHOW_ROLES")>
                                     <li><a href="${contextPath}/tmw/userstore/roleManagement">Role management</a></li>
+                                </#if>
+                                <#if shiro.isPermitted("SHOW_DICTIONARIES")>
+                                    <li><a href="${contextPath}/tmw/userstore/containerDict">Container Types</a></li>
                                 </#if>
 
                                 <#if shiro.isPermitted("SHOW_SYSTEM_CONFIG_MANAGEMENT")>

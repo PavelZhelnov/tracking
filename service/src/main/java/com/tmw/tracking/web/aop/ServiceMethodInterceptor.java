@@ -6,6 +6,7 @@ import com.tmw.tracking.utils.Utils;
 import com.tmw.tracking.web.controller.AnonController;
 import com.tmw.tracking.web.controller.MainController;
 import com.tmw.tracking.web.controller.MonitoringController;
+import com.tmw.tracking.web.controller.TrackingController;
 import com.tmw.tracking.web.controller.UserController;
 import com.tmw.tracking.web.service.auth.AuthenticationResource;
 import com.tmw.tracking.web.service.exceptions.ServiceException;
@@ -69,6 +70,7 @@ public class ServiceMethodInterceptor implements MethodInterceptor {
         if (!(declaringClassName.equals(AuthenticationResource.class.getName())
                 || declaringClassName.equals(MonitoringController.class.getName())
                 || declaringClassName.equals(AnonController.class.getName())
+                || declaringClassName.equals(TrackingController.class.getName())
                 || declaringClassName.equals(UserController.class.getName())
                 || (declaringClassName.equals(MainController.class.getName())
                 && (methodName.equals("loginGet") || methodName.equals("loginPost"))))

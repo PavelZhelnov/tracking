@@ -1,9 +1,9 @@
 <#assign top_nav_selected = "trackContainer">
 <#assign page_title = "Track Container">
-<#include "*/header.ftl"/>
+<#include "../anon/header.ftl"/>
 <fieldset ng-app="TrackContainer">
 
-    <div ng-controller="TrackContainerController">
+    <div ng-controller="trackingController">
 
 
         <div class="span10" style="position: relative; ">
@@ -23,29 +23,31 @@
 
 <script type="text/javascript">
 
-    function TrackContainerController($scope, $http, $modal, $q) {
+    var app = angular.module('app', ["ngTable", "kendo.directives", '$strap.directives']);
+
+    app.controller("trackingController", function($scope, $filter, $http, $q) {
 
         $scope.search = function () {
             $scope.errorMessage = null;
             $scope.loading = true;
-            $http.get('${contextPath}/tmw/tracking/find?container=' + $scope.container).success(function (data) {
+            $http.get('${contextPath}/tmw/tracking/find?container=' + $scope.container).then(function (res) {
                 $scope.loading = false;
-                if (data.errorMessage) {
+                if (res.data.errorMessage) {
                     $scope.message = null;
-                    $scope.errorMessage = data.errorMessage;
+                    $scope.errorMessage = res.data.errorMessage;
                 } else {
-                    $scope.message = data.message;
+                    $scope.message = res.data.message;
                 }
 
-            }).error(function (data) {
+            }, function error(data) {
                 $scope.errorMessage = "Request error";
                 $scope.message = null;
                 $scope.loading = false;
             });
         };
 
-    }
-    var app = angular.module('app', [ "kendo.directives", '$strap.directives']);
+    });
+
 
 </script>
 <#include "*/footer.ftl"/>

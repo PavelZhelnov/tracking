@@ -27,7 +27,7 @@
             <property name="hibernate.connection.url" value="jdbc:mysql://162.253.124.32:3306/sotrackc_tracking?autoReconnect=true&amp;failOverReadOnly=false&amp;maxReconnects=10" />
             <property name="hibernate.connection.username" value="sotrackc_project" />
             <property name="hibernate.connection.password" value="33_Vcklydc_'Y" />
-            <property name="hibernate.hbm2ddl.auto" value="update" />
+            <!--property name="hibernate.hbm2ddl.auto" value="update" /-->
             <property name="hibernate.c3p0.min_size" value="5"/>
             <property name="hibernate.c3p0.max_size" value="20"/>
             <property name="hibernate.c3p0.timeout" value="1800"/>

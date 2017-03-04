@@ -1,10 +1,7 @@
 package com.tmw.tracking.dao;
 
 import com.tmw.tracking.entity.Role;
-import com.tmw.tracking.entity.enums.RoleType;
-
 import java.util.List;
-import java.util.Map;
 
 public interface RoleDao {
 
