@@ -10,7 +10,9 @@ public enum PermissionType {
     SHOW_STATUS("Status page"),
     SHOW_LOGS("Logs page"),
     LOGIN_APP("Login availability to site"),
-    JOB_STATUS("Access to jobs page");
+    JOB_STATUS("Access to jobs page"),
+    SHOW_SYSTEM_CONFIG_MANAGEMENT("Configuration"),
+    SHOW_SYSTEM_MONITORING("System monitoring and tests");
 
     private String description;
 

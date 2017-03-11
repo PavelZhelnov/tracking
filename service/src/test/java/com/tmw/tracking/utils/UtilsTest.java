@@ -1,6 +1,7 @@
 package com.tmw.tracking.utils;
 
 import junit.framework.TestCase;
+import org.apache.commons.collections.Bag;
 import org.junit.Test;
 
 import java.sql.Connection;
@@ -136,5 +137,8 @@ public class UtilsTest extends TestCase {
         else
             System.out.println("Connection is successfully established");
     }
+
+
+
 
 }

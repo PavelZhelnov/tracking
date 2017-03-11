@@ -83,7 +83,8 @@
                                     <li><a href="${contextPath}/tmw/userstore/roleManagement">Role management</a></li>
                                 </#if>
                                 <#if shiro.isPermitted("SHOW_DICTIONARIES")>
-                                    <li><a href="${contextPath}/tmw/userstore/containerDict">Container Types</a></li>
+                                    <li><a href="${contextPath}/tmw/dict/containerTypes">Container Types</a></li>
+                                    <li><a href="${contextPath}/tmw/dict/drivers">Drivers</a></li>
                                 </#if>
 
                                 <#if shiro.isPermitted("SHOW_SYSTEM_CONFIG_MANAGEMENT")>
@@ -99,7 +100,7 @@
                 </ul>
             </div>
             <#if shiro.principal??>
-                <div class="navbar-inverse brand" style="position: absolute; left: 50px;top:35px;">
+                <div class="navbar-inverse brand" style="position: absolute; left: 50px;top:35px;font-size: small;">
                 ${shiro.principal.email}
                     <#if shiro.principal.roles?? && shiro.principal.roles?size &gt; 0>
                         (${shiro.principal.roles[0].roleName})

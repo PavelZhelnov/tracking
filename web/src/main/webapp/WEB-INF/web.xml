@@ -27,6 +27,10 @@
         <filter-name>guiceFilter</filter-name>
         <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>characterEncodingFilter</filter-name>
+        <filter-class>com.tmw.tracking.web.hibernate.CharacterEncodingFilter</filter-class>
+    </filter>
 
     <filter-mapping>
         <filter-name>shiroFilter</filter-name>
@@ -44,7 +48,12 @@
         <filter-name>guiceFilter</filter-name>
         <url-pattern>/tmw/*</url-pattern>
     </filter-mapping>
-<!--
+    <filter-mapping>
+        <filter-name>characterEncodingFilter</filter-name>
+        <url-pattern>/webresources/*</url-pattern>
+    </filter-mapping>
+
+    <!--
      NOTE: uncomment for applying only https requests
 -->
 <!--

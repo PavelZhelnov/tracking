@@ -81,6 +81,8 @@ public class DriverDaoImpl implements DriverDao {
 
     @Override
     public List<Driver> getAll() {
-        return null;
+        TypedQuery<Driver> query = entityManager.createQuery("from Driver ", Driver.class);
+        return query.getResultList();
+
     }
 }
